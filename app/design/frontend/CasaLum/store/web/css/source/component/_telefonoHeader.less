@@ -6,7 +6,9 @@
 
     .header-block-container span {
         float: right;
+        margin-right: 2.5em;
     }
+
 
   }
   
@@ -32,6 +34,16 @@
         .header-after {
             padding-bottom: 10px;
             padding-top: 10px;
-          }
+
+            .header-block-container {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+
+                span {
+                    margin-right: 0px;
+                }
+            }
+        }
       }  
   }
