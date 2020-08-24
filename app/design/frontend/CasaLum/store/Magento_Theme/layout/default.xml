@@ -26,15 +26,24 @@
             </container>
         </referenceContainer>
 
-        <referenceContainer name="header-wrapper">
+        <!--<referenceContainer name="header-wrapper">
             <block class="Magento\Framework\View\Element\Template"
                     name="casalum.store.top.links.personalize"
                     template="CasaLum_StoresTheme::header/toplinks.phtml" 
                     before="top.search"/>
+        </referenceContainer>-->
+
+        <referenceContainer name="header.panel">
+            <block class="Magento\Framework\View\Element\Html\Links" name="header.links">
+                <arguments>
+                    <argument name="css_class" xsi:type="string">header links</argument>
+                </arguments>
+            </block>
         </referenceContainer>
 
-        <!--<move element="header.panel"  destination="header-wrapper" after="top.search" />-->
-        <referenceBlock name="header.panel" remove="true" />
+        <move element="header.panel"  destination="header-wrapper" after="top.search" />
+        <move element="contact-us-link" destination="header.links" after="-"/>
+        <!--<referenceBlock name="header.panel" remove="true" />-->
 
         <referenceBlock name="content">
             <block class="Magento\Framework\View\Element\Template"
