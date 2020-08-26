@@ -1,0 +1,120 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+
+    .search {
+        .search_button {
+            float: right;
+            
+            &::before{
+                font-size: 35px;
+                line-height: 33px;
+                color: #8f8f8f;
+                content: '\e615';
+                font-family: 'icons-blank-theme';
+                margin: 0;
+                vertical-align: top;
+                display: inline-block;
+                font-weight: normal;
+                overflow: hidden;
+                text-align: center;
+            }
+        }
+    }
+
+    .togglesearch{
+        background: #FFFFFF;
+        position: absolute;
+        top: 44px;;
+        right: 0;
+        width: 350px;
+        line-height: 60px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        padding: 10px 10px 22px 10px;
+        display: none;
+    }
+    .togglesearch:before{
+        content: "";
+        position: absolute;
+        top: -22px;
+        right: 5px;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid #fff;
+    }
+    .togglesearch input[type="text"]{
+        width: 350px;
+        padding: 5px 10px;
+        outline: none;
+    }
+    .togglesearch input[type="button"]{
+        width: 80px;
+        padding: 5px 0;
+        background: #D80B15;
+        color: #fff;
+        margin-left: -6px;
+        border: 1px solid #D80B15;
+        outline: none;
+        cursor: pointer;
+    }
+    .block-search {
+        width: auto !important;
+
+        .nested {
+            padding-top: 0px;
+            bottom: -15px;
+            left: 20px;
+        }
+        .action.search {
+            right: 15px;
+            top: 24px !important;
+        }
+    }
+    @media screen and (max-width: 767px){
+        .search-md {
+            display: none;
+            visibility: collapse;
+            /*position: absolute;
+            top: -10000px;*/
+        }
+        .search-sm {
+            display: '';
+            visibility: visible;
+            
+        }
+    }    
+    @media screen and (min-width: 768px){
+        .search-sm {
+            display: none;
+            visibility: collapse;
+        }
+        .search-md {
+            display: '';
+            visibility: visible;
+            /*position: absolute;
+            top: -10000px;*/
+        }
+    }
+   
+
+
+  }
+  
+  //
+  //  Desktop
+  //  _____________________________________________
+  
+  .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+ 
+  }
+  
+  //
+  //  Mobile
+  //  _____________________________________________
+  
+  .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+      
+  }
