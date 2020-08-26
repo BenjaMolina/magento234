@@ -9,6 +9,7 @@
                 </arguments>
             </block>
         </referenceBlock>
+        <move element="contact-us-link" destination="header.links" after="-" />
         <move element="header" destination="customer" before="-"/>
         <move element="register-link" destination="top.links"/>
         <move element="top.links" destination="customer"/>
