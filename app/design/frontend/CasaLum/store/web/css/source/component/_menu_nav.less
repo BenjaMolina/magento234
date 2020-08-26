@@ -1,0 +1,42 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .header.links {
+        li {
+            a {
+                text-decoration: none !important;
+                color: @color-black_dark !important; //#333333
+            }
+        }
+    }
+    
+    /*"Mi cuenta (My acccount)*/
+    .customer-name {
+        .action {
+            border: none;
+            background: transparent;
+            margin-left: -5px;
+        }
+    }
+
+
+
+  }
+  
+  //
+  //  Desktop
+  //  _____________________________________________
+  
+  .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+ 
+  }
+  
+  //
+  //  Mobile
+  //  _____________________________________________
+  
+  .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+      
+  }
