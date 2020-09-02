@@ -11,7 +11,10 @@
         "sort-packages": true
     },
     "require": {
-        "magento/product-community-edition": "2.3.4"
+        "avada/module-proofo": "^1.0",
+        "magento/product-community-edition": "2.3.4",
+        "mageplaza/module-banner-slider": "^2.0",
+        "mageplaza/module-core": "^1.4"
     },
     "require-dev": {
         "allure-framework/allure-phpunit": "~1.2.0",
