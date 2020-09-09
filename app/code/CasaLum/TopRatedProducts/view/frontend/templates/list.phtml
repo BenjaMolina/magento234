@@ -38,16 +38,20 @@ $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VI
                             	</a>
                         	</strong>
 							<?php 
-							$productId = $_product->getId();
+							/*$productId = $_product->getId();
 							$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 							$reviewFactory = $objectManager->create('Magento\Review\Model\Review');
 							$product = $objectManager->create('Magento\Catalog\Model\Product')->load($productId);
 							$storeManager  = $objectManager->create('\Magento\Store\Model\StoreManagerInterface');
 							$storeId = $storeManager->getStore()->getStoreId();
 							$reviewFactory->getEntitySummary($product, $storeId);
-							
+
 							$ratingSummary = $product->getRatingSummary()->getRatingSummary();
-							$reviewCount = $product->getRatingSummary()->getReviewsCount();
+							$reviewCount = $product->getRatingSummary()->getReviewsCount();*/
+							$block->setCurrentProduct($_product);
+							$ratingSummary = $block->getAllRatingsSummary();
+							$reviewCount = $block->getRatingCount();
+
 							if($ratingSummary){ ?>
 								<div class="product-reviews-summary short">
 									<div class="rating-summary">

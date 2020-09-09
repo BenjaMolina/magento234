@@ -9,7 +9,8 @@ use \Magento\Catalog\Block\Product\Context;
 use \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
 use \Magento\Catalog\Model\Product\Visibility;
 use \Magento\Store\Model\StoreManagerInterface; 
-use \Magento\Review\Model\ResourceModel\Review\CollectionFactory as ReviewSummary;
+use \Magento\Review\Model\ReviewFactory;
+use \Magento\Framework\Registry;
 
 
 
@@ -18,7 +19,10 @@ class TopRatedProducts extends AbstractProduct {
     protected $_collectionFactory;
     protected $_catalogProductVisibility;
     protected $_storeManager;
-    protected $_reviewSummary;
+    protected $_reviewFactory;
+    protected $_registry;
+
+    protected $_current_product;
 
     protected $_imageHelper;
 	protected $_cartHelper;
@@ -28,14 +32,16 @@ class TopRatedProducts extends AbstractProduct {
         CollectionFactory $collectionFactory,
         Visibility $catalogProductVisibility,
         StoreManagerInterface $storeManager,
-        ReviewSummary $reviewSummary,
+        ReviewFactory $reviewFactory,
+        Registry $registry,
         array $data = []
     ){
         
         $this->_collectionFactory = $collectionFactory;
         $this->_catalogProductVisibility = $catalogProductVisibility;
         $this->_storeManager = $storeManager;
-        $this->_reviewSummary = $reviewSummary;
+        $this->_reviewFactory = $reviewFactory;
+        $this->_registry = $registry;
 
         $this->_imageHelper = $context->getImageHelper();
         $this->_cartHelper = $context->getCartHelper();
@@ -69,5 +75,36 @@ class TopRatedProducts extends AbstractProduct {
         //echo ($productCollection->getSelect());
 
         return $productCollection;
+    }
+
+    public function getRatingGlobal()
+    {
+        $storeId = $this->_storeManager->getStore()->getId();
+	    $product = $this->getCurrentProduct();
+	    $this->_reviewFactory->create()->getEntitySummary($product, $storeId);
+	    $ratingGlobal = $product->getRatingSummary();
+
+	    return $ratingGlobal;
+
+    }
+
+    public function getAllRatingsSummary()
+    {
+    	return $this->getRatingGlobal()->getRatingSummary();
+    }
+
+	public function getRatingCount()
+	{
+		return $this->getCurrentProduct()->getRatingSummary()->getReviewsCount();
+	}
+
+    public function getCurrentProduct()
+    {
+	    return $this->_current_product;
+    }
+
+    public function setCurrentProduct($product)
+    {
+	   $this->_current_product = $product;
     }
 }
