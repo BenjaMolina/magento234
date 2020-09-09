@@ -1,0 +1,123 @@
+<?php
+$product_collection = $block->getProductCollection(); 
+
+//$product_collection = $this->getRatingCollection();
+$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+?>
+<?php if ($product_collection):?>
+<div class="block widget block-bestseller-products grid">
+	<div class="block-title">
+    	<b class="heading"><?php  echo "Top Rated Products"; ?></b>
+	</div>
+	<div class="block-content">
+    	<div class="products-grid grid">
+        	<ol class="product-items">
+            	<?php $iterator = 1; ?>
+            	<?php foreach ($product_collection as $item):
+					//$_product =$block->getProduct(50);
+					$_product = $item;
+                	?>
+ 
+                	<?php echo($iterator++ == 1) ? '<li class="product-item">' : '</li><li class="product-item">' ?>
+                	<div class="product-item-info">
+                    	<?php
+                    	/*$image_url = $block->imageHelperObj()->init($_product, 'product_page_image_small')
+                        	->setImageFile($_product->getFile())
+                        	->resize($this->getProductimagewidth(),$this->getProductimageheight())
+                        	->getUrl();*/
+                    	?>
+                    	<a href="<?php  echo $_product->getProductUrl() ?>" class="product-item-photo">
+                        	<?php echo $block->getImage($_product,'category_page_grid')->toHtml()  ?>
+                    	</a>
+                    	<div class="product-item-details">
+                        	<strong class="product-item-name">
+                            	<a title="<?php echo $block->escapeHtml($_product->getName()) ?>"
+                               	href="<?php echo $_product->getProductUrl() ?>"
+                               	class="product-item-link">
+                                	<?php echo $block->escapeHtml($_product->getName()) ?>
+                            	</a>
+                        	</strong>
+							<?php 
+							$productId = $_product->getId();
+							$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+							$reviewFactory = $objectManager->create('Magento\Review\Model\Review');
+							$product = $objectManager->create('Magento\Catalog\Model\Product')->load($productId);
+							$storeManager  = $objectManager->create('\Magento\Store\Model\StoreManagerInterface');
+							$storeId = $storeManager->getStore()->getStoreId();
+							$reviewFactory->getEntitySummary($product, $storeId);
+							
+							$ratingSummary = $product->getRatingSummary()->getRatingSummary();
+							$reviewCount = $product->getRatingSummary()->getReviewsCount();
+							if($ratingSummary){ ?>
+								<div class="product-reviews-summary short">
+									<div class="rating-summary">
+										<div title="<?php echo (int)$ratingSummary; ?>%" class="rating-result">
+											<span style="width:<?php echo (int)$ratingSummary; ?>%"><span><?php echo (int)$ratingSummary; ?>%</span></span>
+										</div>
+									</div>
+									<div class="reviews-actions">
+										<?php echo __('('.$reviewCount.') Reviews'); ?>
+									</div>
+								</div>
+							<?php } ?>
+                        	<?php							
+								//echo $block->getReviewsSummaryHtml($_product, $templateType);						
+								echo $block->getProductPrice($_product) ;
+                        	?>
+							 <?= $block->getProductDetailsHtml($_product) ?>
+                        	<div class="product-item-actions">
+                            	<div class="actions-primary">
+                                	<?php if ($_product->isSaleable()): ?>
+                                    	<?php if ($_product->getTypeInstance()->hasRequiredOptions($_product)): ?>
+                                        	<button class="action tocart primary"
+                                                	data-mage-init='{"redirectUrl":{"url":"<?php  echo $block->getAddToCartUrl($_product) ?>"}}'
+                                                	type="button" title="<?php echo __('Add to Cart') ?>">
+                                            	<span><?php echo __('Add to Cart') ?></span>
+                                        	</button>
+                                    	<?php else: ?>
+                                        	<?php
+                                        	$postDataHelper = $this->helper('Magento\Framework\Data\Helper\PostHelper');
+                                        	$postData = $postDataHelper->getPostData($block->getAddToCartUrl($_product), ['product' => $_product->getId()]);
+                                        	?>
+                                        	<button class="action tocart primary"
+                                                	data-post='<?php echo $postData; ?>'
+                                                	type="button" title="<?php echo __('Add to Cart') ?>">
+                                            	<span><?php echo __('Add to Cart') ?></span>
+                                        	</button>
+                                    	<?php endif; ?>
+                                	<?php else: ?>
+                                    	<?php if ($_product->getIsSalable()): ?>
+                                        	<div class="stock available"><span><?php echo __('In stock') ?></span></div>
+                                    	<?php else: ?>
+                                        	<div class="stock unavailable"><span><?php echo __('Out of stock') ?></span></div>
+                                    	<?php endif; ?>
+                                	<?php endif; ?>
+                            	</div>
+								<div class="actions-secondary" data-role="add-to-links">
+									<?php //phpcs:disable ?>
+									<?php if ($this->helper(\Magento\Wishlist\Helper\Data::class)->isAllow()) : ?>
+									<?php //phpcs:enable ?>
+										<a href="#"
+											data-post='<?= /* @noEscape */ $block->getAddToWishlistParams($_product) ?>' class="action towishlist" data-action="add-to-wishlist" title="<?= $block->escapeHtmlAttr(__('Add to Wish List')) ?>">
+											<span><?= $block->escapeHtml(__('Add to Wish List')) ?></span>
+										</a>
+									<?php endif; ?>
+									<?php if ($block->getAddToCompareUrl()) : ?>
+										<?php //phpcs:disable ?>
+										<?php $compareHelper = $this->helper(\Magento\Catalog\Helper\Product\Compare::class);?>
+										<?php //phpcs:enable ?>
+										<a href="#" class="action tocompare" data-post='<?= /* @noEscape */ $compareHelper->getPostDataParams($_product) ?>' title="<?= $block->escapeHtmlAttr(__('Add to Compare')) ?>">
+											<span><?= $block->escapeHtml(__('Add to Compare')) ?></span>
+										</a>
+									<?php endif; ?>
+								</div>
+                        	</div>
+                    	</div>
+                	</div>
+                	<?php echo($iterator == count($product_collection)+1) ? '</li>' : '' ?>
+            	<?php endforeach ?>
+        	</ol>
+    	</div>
+    	<?php endif;?>
+	</div>
+</div>

@@ -237,6 +237,7 @@ return [
         'Avada_Proofo' => 1,
         'CasaLum_BestSellerProduct' => 1,
         'CasaLum_ProductSlider' => 1,
+        'CasaLum_TopRatedProducts' => 1,
         'Dotdigitalgroup_Email' => 1,
         'Dotdigitalgroup_Chat' => 1,
         'Klarna_Core' => 1,
