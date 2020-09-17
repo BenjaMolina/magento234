@@ -235,6 +235,7 @@ return [
         'Amazon_Login' => 1,
         'Amazon_Payment' => 1,
         'Avada_Proofo' => 1,
+        'CasaLum_BannerSlider' => 1,
         'CasaLum_BestSellerProduct' => 1,
         'CasaLum_ProductSlider' => 1,
         'CasaLum_TopRatedProducts' => 1,
