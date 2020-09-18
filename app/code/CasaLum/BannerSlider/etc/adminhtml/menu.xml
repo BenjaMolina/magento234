@@ -21,7 +21,8 @@
              module="CasaLum_BannerSlider" 
              sortOrder="10" 
              resource="CasaLum_BannerSlider::all_banners"
-             parent="CasaLum_BannerSlider::banners_slider"/>
+             parent="CasaLum_BannerSlider::banners_slider"
+             action="casalum_banners_slider/banner/index"/>
 
         <add id="CasaLum_BannerSlider::all_sliders" 
              title="All Sliders"
@@ -29,7 +30,8 @@
              module="CasaLum_BannerSlider" 
              sortOrder="10" 
              resource="CasaLum_BannerSlider::all_sliders"
-             parent="CasaLum_BannerSlider::banners_slider"/>
+             parent="CasaLum_BannerSlider::banners_slider"
+             action="casalum_banners_slider/slider/index"/>
         
     </menu>
 </config>
