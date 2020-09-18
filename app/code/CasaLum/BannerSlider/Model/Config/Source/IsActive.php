@@ -13,18 +13,18 @@ use Magento\Framework\Data\OptionSourceInterface;
 class IsActive implements OptionSourceInterface
 {
     /**
-     * @var \Magento\Cms\Model\Page
+     * @var \CasaLum\BannerSlider\Model\Banner
      */
-    protected $cmsPage;
+    protected $_banner;
 
     /**
      * Constructor
      *
-     * @param \Magento\Cms\Model\Page $cmsPage
+     * @param \CasaLum\BannerSlider\Model\Banner $cmsPage
      */
-    public function __construct(\Magento\Cms\Model\Page $cmsPage)
+    public function __construct(\CasaLum\BannerSlider\Model\Banner $banner)
     {
-        $this->cmsPage = $cmsPage;
+        $this->_banner = $banner;
     }
 
     /**
@@ -34,7 +34,7 @@ class IsActive implements OptionSourceInterface
      */
     public function toOptionArray()
     {
-        $availableOptions = $this->cmsPage->getAvailableStatuses();
+        $availableOptions = $this->_banner->getAvailableStatuses();
         $options = [];
         foreach ($availableOptions as $key => $value) {
             $options[] = [
