@@ -9,201 +9,214 @@
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">casalum_banners_slider_banners_listing.casalum_banners_slider_banners_listing_data_source</item>
+            <item name="deps" xsi:type="string">casalum_banners_slider_banners_listing.casalum_banners_slider_banners_listing_data_source</item>
+        </item>
+        <item name="spinner" xsi:type="string">banners_slider_columns</item>
+        <item name="buttons" xsi:type="array">
+            <item name="add" xsi:type="array">
+                <item name="name" xsi:type="string">add</item>
+                <item name="label" xsi:type="string" translate="true">Add New Banner</item>
+                <item name="class" xsi:type="string">primary</item>
+                <item name="url" xsi:type="string">*/*/new</item>
+            </item>
         </item>
     </argument>
-    <settings>
-        <buttons>
-            <button name="add">
-                <url path="*/*/new"/>
-                <class>primary</class>
-                <label translate="true">Add New Banner</label>
-            </button>
-        </buttons>
-        <spinner>banners_slider_columns</spinner>
-        <deps>
-            <dep>casalum_banners_slider_banners_listing.casalum_banners_slider_banners_listing_data_source</dep>
-        </deps>
-    </settings>
-    <dataSource name="casalum_banners_slider_banners_listing_data_source" component="Magento_Ui/js/grid/provider">
-        <settings>
-            <storageConfig>
-                <param name="indexField" xsi:type="string">banner_id</param>
-            </storageConfig>
-            <updateUrl path="mui/index/render"/>
-        </settings>
-        <aclResource>CasaLum_BannerSlider::all_banners</aclResource>
-        <dataProvider class="\Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="casalum_banners_slider_banners_listing_data_source">
-            <settings>
-                <requestFieldName>id</requestFieldName>
-                <primaryFieldName>banner_id</primaryFieldName>
-            </settings>
-        </dataProvider>
+    <dataSource name="casalum_banners_slider_banners_listing_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider</argument>
+            <argument name="name" xsi:type="string">casalum_banners_slider_banners_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">banner_id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="indexField" xsi:type="string">banner_id</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+            </item>
+        </argument>
     </dataSource>
     <listingToolbar name="listing_top">
-        <settings>
-            <sticky>true</sticky>
-        </settings>
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="sticky" xsi:type="boolean">true</item>
+            </item>
+        </argument>
         <bookmark name="bookmarks"/>
         <columnsControls name="columns_controls"/>
-        <filterSearch name="fulltext"/>
-        <filters name="listing_filters">
-            <settings>
-                <templates>
-                    <filters>
-                        <select>
-                            <param name="template" xsi:type="string">ui/grid/filters/elements/ui-select</param>
-                            <param name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</param>
-                        </select>
-                    </filters>
-                </templates>
-            </settings>
-            <filterSelect name="store_id" provider="${ $.parentName }">
-                <settings>
-                    <captionValue>0</captionValue>
-                    <options class="Magento\Cms\Ui\Component\Listing\Column\Cms\Options"/>
-                    <label translate="true">Store View</label>
-                    <dataScope>store_id</dataScope>
-                    <imports>
-                        <link name="visible">componentType = column, index = ${ $.index }:visible</link>
-                    </imports>
-                </settings>
-            </filterSelect>
-        </filters>
+        <filters name="listing_filters"/>
         <massaction name="listing_massaction">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/tree-massactions</item>
+                </item>
+            </argument>
             <action name="delete">
-                <settings>
-                    <confirm>
-                        <message translate="true">Are you sure you want to delete selected items?</message>
-                        <title translate="true">Delete items</title>
-                    </confirm>
-                    <url path="casalum_banners_slider/banners/massDelete"/>
-                    <type>delete</type>
-                    <label translate="true">Delete</label>
-                </settings>
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">delete</item>
+                        <item name="label" xsi:type="string" translate="true">Delete</item>
+                        <item name="url" xsi:type="url" path="mpbannerslider/banner/massDelete"/>
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Delete Slider</item>
+                            <item name="message" xsi:type="string" translate="true">Are you sure you wan't to delete selected Banners?</item>
+                        </item>
+                    </item>
+                </argument>
             </action>
-            <action name="edit">
-                <settings>
-                    <callback>
-                        <target>editSelected</target>
-                        <provider>casalum_banners_slider_banners_listing.casalum_banners_slider_banners_listing.banners_slider_columns_editor</provider>
-                    </callback>
-                    <type>edit</type>
-                    <label translate="true">Edit</label>
-                </settings>
+            <action name="status">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">status</item>
+                        <item name="label" xsi:type="string" translate="true">Change status</item>
+                    </item>
+                </argument>
+                <argument name="actions" xsi:type="array">
+                    <item name="0" xsi:type="array">
+                        <item name="type" xsi:type="string">enable</item>
+                        <item name="label" xsi:type="string" translate="true">Enable</item>
+                        <item name="url" xsi:type="url" path="mpbannerslider/banner/massStatus">
+                            <param name="status">1</param>
+                        </item>
+                    </item>
+                    <item name="1" xsi:type="array">
+                        <item name="type" xsi:type="string">disable</item>
+                        <item name="label" xsi:type="string" translate="true">Disable</item>
+                        <item name="url" xsi:type="url" path="mpbannerslider/banner/massStatus">
+                            <param name="status">0</param>
+                        </item>
+                    </item>
+                </argument>
             </action>
         </massaction>
         <paging name="listing_paging"/>
     </listingToolbar>
     <columns name="banners_slider_columns">
-        <settings>
-            <editorConfig>
-                <param name="clientConfig" xsi:type="array">
-                    <item name="saveUrl" xsi:type="url" path="casalum_banners_slider/banners/inlineEdit"/>
-                    <item name="validateBeforeSave" xsi:type="boolean">false</item>
-                </param>
-                <param name="indexField" xsi:type="string">block_id</param>
-                <param name="enabled" xsi:type="boolean">true</param>
-                <param name="selectProvider" xsi:type="string">casalum_banners_slider_banners_listing.casalum_banners_slider_banners_listing.banners_slider_columns.ids</param>
-            </editorConfig>
-            <childDefaults>
-                <param name="fieldAction" xsi:type="array">
-                    <item name="provider" xsi:type="string">casalum_banners_slider_banners_listing.casalum_banners_slider_banners_listing.banners_slider_columns_editor</item>
-                    <item name="target" xsi:type="string">startEdit</item>
-                    <item name="params" xsi:type="array">
-                        <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
-                        <item name="1" xsi:type="boolean">true</item>
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="storageConfig" xsi:type="array">
+                    <item name="provider" xsi:type="string">casalum_banners_slider_banners_listing.casalum_banners_slider_banners_listing.listing_top.bookmarks</item>
+                    <item name="namespace" xsi:type="string">current</item>
+                </item>
+                <item name="editorConfig" xsi:type="array">
+                    <item name="selectProvider" xsi:type="string">casalum_banners_slider_banners_listing.casalum_banners_slider_banners_listing.banners_slider_columns.ids</item>
+                    <item name="enabled" xsi:type="boolean">true</item>
+                    <item name="indexField" xsi:type="string">banner_id</item>
+                    <item name="clientConfig" xsi:type="array">
+                        <item name="saveUrl" xsi:type="url" path="mpbannerslider/banner/inlineEdit"/>
+                        <item name="validateBeforeSave" xsi:type="boolean">false</item>
                     </item>
-                </param>
-            </childDefaults>
-        </settings>
+                </item>
+                <item name="childDefaults" xsi:type="array">
+                    <item name="fieldAction" xsi:type="array">
+                        <item name="provider" xsi:type="string">casalum_banners_slider_banners_listing.casalum_banners_slider_banners_listing.banners_slider_columns_editor</item>
+                        <item name="target" xsi:type="string">startEdit</item>
+                        <item name="params" xsi:type="array">
+                            <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+                            <item name="1" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider" xsi:type="string">casalum_banners_slider_banners_listing.casalum_banners_slider_banners_listing.listing_top.bookmarks</item>
+                        <item name="root" xsi:type="string">columns.${ $.index }</item>
+                        <item name="namespace" xsi:type="string">current.${ $.storageConfig.root}</item>
+                    </item>
+                </item>
+            </item>
+        </argument>
         <selectionsColumn name="ids">
-            <settings>
-                <indexField>banner_id</indexField>
-            </settings>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="indexField" xsi:type="string">banner_id</item>
+                    <item name="sortOrder" xsi:type="number">1</item>
+                </item>
+            </argument>
         </selectionsColumn>
         <column name="banner_id">
-            <settings>
-                <filter>textRange</filter>
-                <label translate="true">ID</label>
-                <sorting>asc</sorting>
-            </settings>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="label" xsi:type="string" translate="true">ID</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+        </column>
+        <column name="content">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/thumbnail</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="has_preview" xsi:type="string">1</item>
+                    <item name="label" xsi:type="string" translate="true">Banner</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
         </column>
         <column name="name">
-            <settings>
-                <filter>text</filter>
-                <editor>
-                    <validation>
-                        <rule name="required-entry" xsi:type="boolean">true</rule>
-                    </validation>
-                    <editorType>text</editorType>
-                </editor>
-                <label translate="true">Name</label>
-            </settings>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="editor" xsi:type="array">
+                        <item name="editorType" xsi:type="string">text</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                    <item name="label" xsi:type="string" translate="true">Name</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+            </argument>
         </column>
+
         <column name="status">
             <argument name="data" xsi:type="array">
                 <item name="options" xsi:type="object">CasaLum\BannerSlider\Model\Config\Source\IsActive</item>
                 <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
                     <item name="editor" xsi:type="string">select</item>
-                    <item name="filter" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
                     <item name="label" xsi:type="string" translate="true">Status</item>
-                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
-                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
                 </item>
             </argument>
         </column>
-        <column name="type">
+        
+        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date">
             <argument name="data" xsi:type="array">
-                <item name="options" xsi:type="object">CasaLum\BannerSlider\Model\Config\Source\Type</item>
                 <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">select</item>
-                    <item name="label" xsi:type="string" translate="true">Type</item>
-                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
-                    <item name="dataType" xsi:type="string">select</item>
-                    <!--<item name="sortOrder" xsi:type="number">40</item>-->
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/date</item>
+                    <item name="dataType" xsi:type="string">date</item>
+                    <item name="label" xsi:type="string" translate="true">Created</item>
+                    <item name="sortOrder" xsi:type="number">60</item>
                 </item>
             </argument>
         </column>
-        <column name="content" 
-                class="CasaLum\BannerSlider\Ui\Component\Listing\Column\Image" 
-                component="Magento_Ui/js/grid/columns/thumbnail">
-            <settings>
-                <altField>name</altField>
-                <hasPreview>1</hasPreview>
-                <addField>true</addField>
-                <label translate="true">Banner</label>
-                <sortable>false</sortable>
-            </settings>
+        <column name="updated_at" class="Magento\Ui\Component\Listing\Columns\Date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/date</item>
+                    <item name="dataType" xsi:type="string">date</item>
+                    <item name="label" xsi:type="string" translate="true">Modified</item>
+                    <item name="sortOrder" xsi:type="number">70</item>
+                </item>
+            </argument>
         </column>
-        <!--<column name="store_id" class="Magento\Store\Ui\Component\Listing\Column\Store">
-            <settings>
-                <label translate="true">Store View</label>
-                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
-                <sortable>false</sortable>
-            </settings>
-        </column>-->
-        <column name="created_at" 
-                class="Magento\Ui\Component\Listing\Columns\Date" 
-                component="Magento_Ui/js/grid/columns/date">
-            <settings>
-                <filter>dateRange</filter>
-                <dataType>date</dataType>
-                <label translate="true">Created</label>
-            </settings>
-        </column>
-        <column name="updated_at" 
-                class="Magento\Ui\Component\Listing\Columns\Date" 
-                component="Magento_Ui/js/grid/columns/date">
-            <settings>
-                <filter>dateRange</filter>
-                <dataType>date</dataType>
-                <label translate="true">Modified</label>
-            </settings>
-        </column>
-        <actionsColumn name="actions" class="Magento\Cms\Ui\Component\Listing\Column\BlockActions">
-            <settings>
-                <indexField>banner_id</indexField>
-            </settings>
+        <actionsColumn name="actions" class="CasaLum\BannerSlider\Ui\Component\Listing\Column\BlockActions">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="indexField" xsi:type="string">banner_id</item>
+                    <item name="sortOrder" xsi:type="number">200</item>
+                </item>
+            </argument>
         </actionsColumn>
     </columns>
 </listing>
