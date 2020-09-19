@@ -136,4 +136,22 @@ class Collection extends BannerCollection implements SearchResultInterface
     {
         return $this;
     }
+
+    /**
+     * Join casalum_bannerslider_banner_slider relation table (many to many with Sliders)
+     */
+
+    protected function _renderFiltersBefore() {
+        $this->getSelect()->joinLeft(
+            ['banner_slider' => $this->getTable('casalum_bannerslider_banner_slider')],
+            'main_table.banner_id = banner_slider.banner_id',
+            ['banner_slider.slider_id as slider_id']
+        )
+        ->joinLeft(
+            ['slider' => $this->getTable('casalum_bannerslider_slider')],
+            'banner_slider.slider_id = slider.slider_id',
+            ['slider.name as slider_name']
+        );
+        //parent::__renderFiltersBefore();
+    }
 }
