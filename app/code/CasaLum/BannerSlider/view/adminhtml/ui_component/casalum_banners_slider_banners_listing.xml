@@ -63,7 +63,7 @@
                     <item name="config" xsi:type="array">
                         <item name="type" xsi:type="string">delete</item>
                         <item name="label" xsi:type="string" translate="true">Delete</item>
-                        <item name="url" xsi:type="url" path="mpbannerslider/banner/massDelete"/>
+                        <item name="url" xsi:type="url" path="casalum_banners_slider/banner/massDelete"/>
                         <item name="confirm" xsi:type="array">
                             <item name="title" xsi:type="string" translate="true">Delete Slider</item>
                             <item name="message" xsi:type="string" translate="true">Are you sure you wan't to delete selected Banners?</item>
@@ -82,14 +82,14 @@
                     <item name="0" xsi:type="array">
                         <item name="type" xsi:type="string">enable</item>
                         <item name="label" xsi:type="string" translate="true">Enable</item>
-                        <item name="url" xsi:type="url" path="mpbannerslider/banner/massStatus">
+                        <item name="url" xsi:type="url" path="casalum_banners_slider/banner/massStatus">
                             <param name="status">1</param>
                         </item>
                     </item>
                     <item name="1" xsi:type="array">
                         <item name="type" xsi:type="string">disable</item>
                         <item name="label" xsi:type="string" translate="true">Disable</item>
-                        <item name="url" xsi:type="url" path="mpbannerslider/banner/massStatus">
+                        <item name="url" xsi:type="url" path="casalum_banners_slider/banner/massStatus">
                             <param name="status">0</param>
                         </item>
                     </item>
@@ -110,7 +110,7 @@
                     <item name="enabled" xsi:type="boolean">true</item>
                     <item name="indexField" xsi:type="string">banner_id</item>
                     <item name="clientConfig" xsi:type="array">
-                        <item name="saveUrl" xsi:type="url" path="mpbannerslider/banner/inlineEdit"/>
+                        <item name="saveUrl" xsi:type="url" path="casalum_banners_slider/banner/inlineEdit"/>
                         <item name="validateBeforeSave" xsi:type="boolean">false</item>
                     </item>
                 </item>
@@ -220,7 +220,7 @@
                 </item>
             </argument>
         </column>
-        <actionsColumn name="actions" class="CasaLum\BannerSlider\Ui\Component\Listing\Column\BlockActions">
+        <actionsColumn name="actions" class="CasaLum\BannerSlider\Ui\Component\Listing\Column\BannerActions">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="indexField" xsi:type="string">banner_id</item>

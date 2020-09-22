@@ -15,7 +15,7 @@ use Magento\Framework\Escaper;
 /**
  * Class to build edit and delete link for each item.
  */
-class BlockActions extends Column
+class BannerActions extends Column
 {
     /**
      * Url path
