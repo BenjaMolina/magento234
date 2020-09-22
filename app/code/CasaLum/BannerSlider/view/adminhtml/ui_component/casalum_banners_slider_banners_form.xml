@@ -215,7 +215,7 @@
                     <settings>
                         <required>true</required>
                         <uploaderConfig>
-                            <param xsi:type="url" name="url" path="casalum_banners_slider/banner/upload"/>
+                            <param xsi:type="url" name="url" path="casalum_banners_slider/banner_image/upload"/>
                         </uploaderConfig>
                         <previewTmpl>Magento_Catalog/image-preview</previewTmpl>
                         <openDialogTitle>Media Gallery</openDialogTitle>
