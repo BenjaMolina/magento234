@@ -8,6 +8,9 @@ namespace CasaLum\BannerSlider\Model\Banner;
 use CasaLum\BannerSlider\Model\ResourceModel\Banner\CollectionFactory;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Ui\DataProvider\Modifier\PoolInterface;
+use Magento\Framework\App\ObjectManager;
+use CasaLum\BannerSlider\Model\Banner\FileInfo;
+use Magento\Framework\Filesystem;
 
 /**
  * Class DataProvider
@@ -28,6 +31,11 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
      * @var array
      */
     protected $loadedData;
+
+    /**
+     * @var Filesystem
+     */
+    private $fileInfo;
 
     /**
      * Constructor
@@ -69,6 +77,7 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
         $items = $this->collection->getItems();
         /** @var \CasaLum\BannerSlider\Model\Banner $banner */
         foreach ($items as $banner) {
+            $banner = $this->convertValues($banner); //Obntenemos la imagen
             $this->loadedData[$banner->getId()] = $banner->getData();
         }
 
@@ -82,5 +91,45 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
         }
 
         return $this->loadedData;
+    }
+
+    /**
+     * Converts image data to acceptable for rendering format
+     *
+     * @param \CasaLum\BannerSlider\Model\Banner $banner
+     * @return \CasaLum\BannerSlider\Model\Banner $banner
+     */
+    private function convertValues($banner)
+    {
+        $fileName = $banner->getImage();
+        $image = [];
+        if ($this->getFileInfo()->isExist($fileName)) {
+            $stat = $this->getFileInfo()->getStat($fileName);
+            $mime = $this->getFileInfo()->getMimeType($fileName);
+            $image[0]['name'] = $fileName;
+            $image[0]['url'] = $banner->getImageUrl();
+            $image[0]['size'] = isset($stat) ? $stat['size'] : 0;
+            $image[0]['type'] = $mime;
+        }
+
+        $banner->setImage($image);
+        
+
+        return $banner;
+    }
+
+    /**
+     * Get FileInfo instance
+     *
+     * @return FileInfo
+     *
+     * @deprecated 101.1.0
+     */
+    private function getFileInfo()
+    {
+        if ($this->fileInfo === null) {
+            $this->fileInfo = ObjectManager::getInstance()->get(FileInfo::class);
+        }
+        return $this->fileInfo;
     }
 }

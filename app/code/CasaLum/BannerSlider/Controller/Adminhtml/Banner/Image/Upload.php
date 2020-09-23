@@ -2,7 +2,8 @@
 namespace CasaLum\BannerSlider\Controller\Adminhtml\Banner\Image;
 
 use Magento\Backend\App\Action;
-use Magento\Catalog\Model\ImageUploader;
+//use Magento\Catalog\Model\ImageUploader;
+use CasaLum\BannerSlider\Model\Banner\ImageUploader;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
 
