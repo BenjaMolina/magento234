@@ -145,7 +145,10 @@ class Collection extends BannerCollection implements SearchResultInterface
         $this->getSelect()->joinLeft(
             ['banner_slider' => $this->getTable('casalum_bannerslider_banner_slider')],
             'main_table.banner_id = banner_slider.banner_id',
-            ['banner_slider.slider_id as slider_id']
+            array(
+                'slider_id' => 'banner_slider.slider_id',
+                'position' => 'banner_slider.position',
+            )
         )
         ->joinLeft(
             ['slider' => $this->getTable('casalum_bannerslider_slider')],

@@ -10,6 +10,7 @@ use Magento\Framework\Model\ResourceModel\Db\Context;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\App\RequestInterface;
 
 
 /**
@@ -18,6 +19,12 @@ use Magento\Framework\Exception\LocalizedException;
  */
 class Banner extends AbstractDb
 {
+    /**
+     * @var \Magento\Framework\App\RequestInterface
+     */
+    protected $_request;
+
+
     /**
      * Date model
      *
@@ -43,10 +50,12 @@ class Banner extends AbstractDb
     public function __construct(
         DateTime $date,
         ManagerInterface $eventManager,
-        Context $context
+        Context $context,
+        RequestInterface $request
     ) {
         $this->date         = $date;
         $this->eventManager = $eventManager;
+        $this->_request     = $request;
 
         parent::__construct($context);
         $this->bannerSliderTable = $this->getTable('mageplaza_bannerslider_banner_slider');
@@ -82,7 +91,7 @@ class Banner extends AbstractDb
         $name = $object->getName();
         $url = $object->getUrlBanner();
         $slider = $object->getSliderId();
-        $order = $object->getOrder();
+        $order = $object->getOrder() ?: $object->getPosition(); //(Position para inlineEdit)
         $image = $object->getImage();
 
         if(empty($name)){
@@ -92,9 +101,11 @@ class Banner extends AbstractDb
             throw new LocalizedException(__("The URL link is invalid"));
         }
 
-        if(!empty( $image) && is_array($image)){
+        if(!empty( $image)){
             /**Lo que guardamos es el nombre de la imagen */
-            $object->setImage($image[0]['name']);
+            if($this->_request->getParam('isAjax')) $object->setImage($image); //Para cuando es inlineEdit
+
+            if(is_array($image)) $object->setImage($image[0]['name']);
         }else{
             throw new LocalizedException(__("The image is required"));
         }
@@ -103,7 +114,7 @@ class Banner extends AbstractDb
             throw new LocalizedException(__("The Sort Order must be a numeric"));
         }
 
-        if(!is_numeric($slider)){
+        if(!is_numeric($slider) && !$this->_request->getParam('isAjax')){ //Para cuando NO es inlineEdit
             throw new LocalizedException(__("The Slider is required"));
         }
 
