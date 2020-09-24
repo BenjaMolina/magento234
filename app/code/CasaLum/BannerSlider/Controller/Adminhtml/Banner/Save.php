@@ -75,7 +75,6 @@ class Save extends Action
             $imageName = "";
             
             if(!empty($data['image'])){
-                $oldImage = array_merge(array(), $data['image']);
                 $imageName = $data['image'][0]['name'];
                 $data['image'] = $imageName;
             }
@@ -112,7 +111,7 @@ class Save extends Action
                 $this->messageManager->addErrorMessage($e->getMessage());
                 $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the banner.'));
             }
-            $data['image'] = $oldImage;
+            
             $this->dataPersistor->set('banners_slider', $data); //Igual que en CasaLum\BannerSlider\Model\Banner\DataProvider
             return $resultRedirect->setPath('*/*/edit', ['banner_id' => $id]);
         }
@@ -129,12 +128,11 @@ class Save extends Action
      */
     private function processBlockReturn($model, $data, $resultRedirect)
     {
-        $redirect = $data['back'] ?? 'close';
+        $redirect = $this->getRequest()->getParam('back');
+        //$redirect = $data['back'] ?? 'close';
 
-        if ($redirect ==='continue') {
+        if ($redirect ==='edit') {
             $resultRedirect->setPath('*/*/edit', ['banner_id' => $model->getId()]);
-        } else if ($redirect === 'close') {
-            $resultRedirect->setPath('*/*/');
         } else if ($redirect === 'duplicate') {
             //$duplicateModel = $this->blockFactory->create(['data' => $data]);
             $duplicateModel = $this->_objectManager->create(\CasaLum\BannerSlider\Model\Banner::class);
@@ -148,6 +146,9 @@ class Save extends Action
             $this->messageManager->addSuccessMessage(__('You duplicated the block.'));
             $this->dataPersistor->set('banners_slider', $data);
             $resultRedirect->setPath('*/*/edit', ['banner_id' => $id]);
+        }
+        else{
+            $resultRedirect->setPath('*/*/');
         }
         return $resultRedirect;
     }
