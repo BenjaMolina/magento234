@@ -12,7 +12,7 @@ use Magento\Framework\App\ObjectManager;
 use Magento\Store\Model\StoreManagerInterface;
 
 /**
- * CMS block model
+ * CMS banner model
  *
  * @method Block setStoreId(int $storeId)
  * @method int getStoreId()

@@ -19,6 +19,21 @@ use Magento\Framework\Exception\LocalizedException;
 class Banner extends AbstractDb
 {
     /**
+     * Date model
+     *
+     * @var DateTime
+     */
+    protected $date;
+
+    /**
+     * Slider relation model
+     *
+     * @var string
+     */
+    protected $bannerSliderTable;
+
+    
+    /**
      * constructor
      *
      * @param DateTime $date
