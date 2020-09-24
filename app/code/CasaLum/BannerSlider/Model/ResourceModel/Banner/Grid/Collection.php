@@ -153,7 +153,7 @@ class Collection extends BannerCollection implements SearchResultInterface
         ->joinLeft(
             ['slider' => $this->getTable('casalum_bannerslider_slider')],
             'banner_slider.slider_id = slider.slider_id',
-            ['slider.name as slider_name']
+            ['slider.slider_id as slider_id']
         );
         //parent::__renderFiltersBefore();
     }

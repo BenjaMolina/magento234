@@ -114,7 +114,7 @@ class Banner extends AbstractDb
             throw new LocalizedException(__("The Sort Order must be a numeric"));
         }
 
-        if(!is_numeric($slider) && !$this->_request->getParam('isAjax')){ //Para cuando NO es inlineEdit
+        if(!is_numeric($slider)){ 
             throw new LocalizedException(__("The Slider is required"));
         }
 
