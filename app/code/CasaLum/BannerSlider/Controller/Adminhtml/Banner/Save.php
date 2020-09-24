@@ -70,13 +70,14 @@ class Save extends Action
             if (empty($data['banner_id'])) {
                 $data['banner_id'] = null;
             }
-
-            /**Lo que guardamos es el nombre de la imagen */
-            $imageName = "";
+            if (empty($data['order'])) {
+                $data['order'] = 0;
+            }
             
+            /*Ayuda a que si hay un error al guardar, la imagen que se cargo No se pierda y se muestre  */
+            $oldImage = null;
             if(!empty($data['image'])){
-                $imageName = $data['image'][0]['name'];
-                $data['image'] = $imageName;
+                $oldImage = array_merge(array(), $data['image']);
             }
 
             /** @var \CasaLum\BannerSlider\Model\Banner $model */
@@ -97,10 +98,11 @@ class Save extends Action
             $model->setData($data);
 
             try {
+                /*Antes de gaurdar va al _beoforeSave() del Model\ResourceModel\Banner */
                 $model->save();
-                if($imageName){
+                if(!empty($model->getImage())){
                     //Se mueve la imagen del directorio temporal a la carpeta "root" (casalum/banners_slider)
-                    $this->_imageUploader->moveFileFromTmp($imageName); 
+                    $this->_imageUploader->moveFileFromTmp($model->getImage()); 
                 }
                 $this->messageManager->addSuccessMessage(__('You saved the banner.'));
                 $this->dataPersistor->clear('banners_slider');//Igual que en CasaLum\BannerSlider\Model\Banner\DataProvider
@@ -111,7 +113,10 @@ class Save extends Action
                 $this->messageManager->addErrorMessage($e->getMessage());
                 $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the banner.'));
             }
-            
+
+            /*Devolvemos la imagen cargada si existe un error */
+            if($oldImage) $data['image'] = $oldImage;
+
             $this->dataPersistor->set('banners_slider', $data); //Igual que en CasaLum\BannerSlider\Model\Banner\DataProvider
             return $resultRedirect->setPath('*/*/edit', ['banner_id' => $id]);
         }
