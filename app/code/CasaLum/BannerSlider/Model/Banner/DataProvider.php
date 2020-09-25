@@ -78,6 +78,7 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
         /** @var \CasaLum\BannerSlider\Model\Banner $banner */
         foreach ($items as $banner) {
             $banner = $this->convertValues($banner); //Obntenemos la imagen
+            $banner = $this->setSliderRelationship($banner); //agregamos la relacion entre slider y banner
             $this->loadedData[$banner->getId()] = $banner->getData();
         }
 
@@ -131,5 +132,20 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
             $this->fileInfo = ObjectManager::getInstance()->get(FileInfo::class);
         }
         return $this->fileInfo;
+    }
+
+     /**
+     * Set slider_id and position to Banner
+     *
+     * @param \CasaLum\BannerSlider\Model\Banner $banner
+     * @return \CasaLum\BannerSlider\Model\Banner $banner
+     */
+    private function setSliderRelationship($banner){
+        $realtionship = $banner->getSlidersRelationship();
+        foreach($realtionship as $value){
+            $banner->addData($value);
+        }
+
+        return $banner;
     }
 }

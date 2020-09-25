@@ -145,7 +145,7 @@
             </settings>
         </field>
 
-        <field name="order" formElement="input">
+        <field name="position" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">banner</item>
@@ -157,7 +157,7 @@
                 </validation>
                 <dataType>text</dataType>
                 <label translate="true">Sort Order</label>
-                <dataScope>order</dataScope>
+                <dataScope>position</dataScope>
             </settings>
         </field>
         <field name="storeviews">

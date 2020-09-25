@@ -109,4 +109,22 @@ class Banner extends AbstractModel
         }
         return $this->_storeManager;
     }
+
+    /**
+     * @return array|mixed
+     */
+    public function getSlidersRelationship()
+    {
+        if (!$this->getId()) {
+            return [];
+        }
+
+        $array = $this->getData('sliders_relationship');
+        if ($array === null) {
+            $array = $this->getResource()->getSlidersRelationship($this);
+            $this->setData('sliders_relationship', $array);
+        }
+
+        return $array;
+    }
 }
