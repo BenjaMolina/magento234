@@ -26,6 +26,6 @@ class Slider extends AbstractDb
      */
     protected function _construct()
     {
-        $this->_init('casalum_bannerslider_slider', 'slider_id'); //Tabla -> ID
+        $this->_init('casalum_bannerslider_slider', 'slider_id'); // Tabla -> ID
     }
 }

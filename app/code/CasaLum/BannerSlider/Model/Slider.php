@@ -15,7 +15,7 @@ use Magento\Framework\Model\AbstractModel;
 class Slider extends AbstractModel 
 {
     /**
-     *Banner cache tag
+     *Slider cache tag
      */
     const CACHE_TAG = 'casalum_bannerslider_slider'; //Nombre de la Tabla
 

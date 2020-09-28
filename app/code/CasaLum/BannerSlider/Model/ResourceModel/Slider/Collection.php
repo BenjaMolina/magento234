@@ -21,7 +21,7 @@ class Collection extends AbstractCollection
     protected function _construct()
     {
         /* Enlazamos el Modelo con el ResourceModel */
-        $this->_init(\CasaLum\BannerSlider\Model\Slider::class, \CasaLum\BannerSlider\Model\ResourceModel\Slider::class);
+        $this->_init(\CasaLum\BannerSlider\Model\Slider::class, \CasaLum\BannerSlider\Model\ResourceModel\Slider::class); 
     }
 
 }

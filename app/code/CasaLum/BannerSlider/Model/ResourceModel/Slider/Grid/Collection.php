@@ -134,6 +134,6 @@ class Collection extends SliderCollection implements SearchResultInterface
      */
     public function setItems(array $items = null)
     {
-        return $this;
+        return $this; 
     }
 }

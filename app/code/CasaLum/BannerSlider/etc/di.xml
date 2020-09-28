@@ -11,7 +11,7 @@
         <arguments>
             <argument name="collections" xsi:type="array">
                 <item name="casalum_banners_slider_banners_listing_data_source" xsi:type="string">CasaLum\BannerSlider\Model\ResourceModel\Banner\Grid\Collection</item>
-                <!--<item name="cms_block_listing_data_source" xsi:type="string">CasaLum\BannerSlider\Model\ResourceModel\Slider\Grid\Collection</item>-->
+                <item name="casalum_banners_slider_sliders_listing_data_source" xsi:type="string">CasaLum\BannerSlider\Model\ResourceModel\Slider\Grid\Collection</item>-->
             </argument>
         </arguments>
     </type>
@@ -22,6 +22,15 @@
             <argument name="eventPrefix" xsi:type="string">casalum_bannerslider_banner_grid_collection</argument>
             <argument name="eventObject" xsi:type="string">banner_grid_collection</argument>
             <argument name="resourceModel" xsi:type="string">CasaLum\BannerSlider\Model\ResourceModel\Banner</argument>
+        </arguments>
+    </type>
+    
+    <type name="CasaLum\BannerSlider\Model\ResourceModel\Slider\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">casalum_bannerslider_slider</argument>
+            <argument name="eventPrefix" xsi:type="string">casalum_bannerslider_slider_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">slider_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">CasaLum\BannerSlider\Model\ResourceModel\Slider</argument>
         </arguments>
     </type>
     <!--<virtualType name="CasaLum\BannerSlider\Model\ResourceModel\Banner\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
