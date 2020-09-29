@@ -63,4 +63,22 @@ class Slider extends AbstractModel
     {
         return [self::STATUS_ENABLED => __('Enabled'), self::STATUS_DISABLED => __('Disabled')];
     }
+
+    /**
+     * @return array|mixed
+     */
+    public function getBannerRelationship()
+    {
+        if (!$this->getId()) {
+            return [];
+        }
+
+        $array = $this->getData('banners_relationship');
+        if ($array === null) {
+            $array = $this->getResource()->getBannerRelationship($this);
+            $this->setData('banners_relationship', $array);
+        }
+
+        return $array;
+    }
 }

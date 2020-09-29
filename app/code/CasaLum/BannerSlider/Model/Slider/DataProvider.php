@@ -75,19 +75,18 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
             return $this->loadedData;
         }
         $items = $this->collection->getItems();
-        /** @var \CasaLum\BannerSlider\Model\Banner $banner */
-        foreach ($items as $banner) {
-            /*$banner = $this->convertValues($banner); //Obntenemos la imagen
-            $banner = $this->setSliderRelationship($banner); //agregamos la relacion entre slider y banner*/
-            $this->loadedData[$banner->getId()] = $banner->getData();
+        /** @var \CasaLum\BannerSlider\Model\Slider $slider */
+        foreach ($items as $slider) {
+            $slider = $this->setBannerRelationship($slider); //agregamos la relacion entre slider y banner
+            $this->loadedData[$slider->getId()] = $slider->getData();
         }
 
         //Used from the save Action
         $data = $this->dataPersistor->get('banners_slider_slider');
         if (!empty($data)) {
-            $banner = $this->collection->getNewEmptyItem();
-            $banner->setData($data);
-            $this->loadedData[$banner->getId()] = $banner->getData();
+            $slider = $this->collection->getNewEmptyItem();
+            $slider->setData($data);
+            $this->loadedData[$slider->getId()] = $slider->getData();
             $this->dataPersistor->clear('banners_slider_slider');
         }
 
@@ -97,15 +96,13 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
      /**
      * Set slider_id and position to Banner
      *
-     * @param \CasaLum\BannerSlider\Model\Banner $banner
-     * @return \CasaLum\BannerSlider\Model\Banner $banner
+     * @param \CasaLum\BannerSlider\Model\Slider $slider
+     * @return \CasaLum\BannerSlider\Model\Slider $slider
      */
-    private function setSliderRelationship($banner){
-        $realtionship = $banner->getSlidersRelationship();
-        foreach($realtionship as $value){
-            $banner->addData($value);
-        }
+    private function setBannerRelationship($slider){
+        $realtionship = $slider->getBannerRelationship();
+        $slider->setData('banner_id', $realtionship);
 
-        return $banner;
+        return $slider;
     }
 }
