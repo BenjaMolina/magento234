@@ -83,6 +83,9 @@
                 </item>
             </argument>
             <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
                 <dataType>boolean</dataType>
                 <label translate="true">Enable Slider</label>
                 <dataScope>status</dataScope>
@@ -155,9 +158,10 @@
                     <item name="source" xsi:type="string">slider</item>
                     <item name="dataScope" xsi:type="string">banner_id</item>
                     <item name="default" xsi:type="string">0</item>
-                    <item name="validation" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <!--<item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
-                    </item>
+                    </item>-->
                 </item>
             </argument>
         </field>
@@ -377,14 +381,14 @@
                 </checkbox>
             </formElements>
         </field>
-        <fieldset name="responsive_items">
+        <fieldset name="dynamic_rows_container">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Max Items Slider</item>
                     <item name="source" xsi:type="string">slider</item>
                 </item>
             </argument>
-            <container name="dynamic_rows_container">
+            <container name="responsive_items">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
                         <item name="component" xsi:type="string">Magento_Ui/js/dynamic-rows/dynamic-rows</item>
@@ -406,36 +410,34 @@
                             <item name="showFallbackReset" xsi:type="boolean">false</item>
                         </item>
                     </argument>
-                    <field name="size">
-                        <argument name="data" xsi:type="array">
-                            <item name="config" xsi:type="array">
-                                <item name="dataType" xsi:type="string">text</item>
-                                <item name="label" xsi:type="string" translate="true">Screen size from</item>
-                                <item name="formElement" xsi:type="string">input</item>
-                                <item name="dataScope" xsi:type="string">size</item>
-                                <item name="showFallbackReset" xsi:type="boolean">false</item>
-                                <item name="validation" xsi:type="array">
-                                    <item name="required-entry" xsi:type="boolean">true</item>
-                                </item>
-                                <item name="sortOrder" xsi:type="string">10</item>
-                            </item>
-                        </argument>
-                    </field>
-                    <field name="items">
+                     <field name="items">
                         <argument name="data" xsi:type="array">
                              <item name="config" xsi:type="array">
                                 <item name="dataType" xsi:type="string">text</item>
-                                <item name="label" xsi:type="string" translate="true">Number of items</item>
+                                <item name="label" xsi:type="string" translate="true">Screen size from</item>
                                 <item name="formElement" xsi:type="string">input</item>
                                 <item name="dataScope" xsi:type="string">items</item>
                                 <item name="showFallbackReset" xsi:type="boolean">false</item>
                                 <item name="validation" xsi:type="array">
                                     <item name="required-entry" xsi:type="boolean">true</item>
                                 </item>
-                                <item name="sortOrder" xsi:type="string">10</item>
                             </item>
                         </argument>
                     </field>
+                    <field name="size">
+                        <argument name="data" xsi:type="array">
+                            <item name="config" xsi:type="array">
+                                <item name="dataType" xsi:type="string">text</item>
+                                <item name="label" xsi:type="string" translate="true">Number of items</item>
+                                <item name="formElement" xsi:type="string">input</item>
+                                <item name="dataScope" xsi:type="string">size</item>
+                                <item name="showFallbackReset" xsi:type="boolean">false</item>
+                                <item name="validation" xsi:type="array">
+                                    <item name="required-entry" xsi:type="boolean">true</item>
+                                </item>
+                            </item>
+                        </argument>
+                    </field>                   
                     <actionDelete>
                         <argument name="data" xsi:type="array">
                             <item name="config" xsi:type="array">
