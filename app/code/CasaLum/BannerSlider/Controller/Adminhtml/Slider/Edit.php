@@ -10,9 +10,14 @@ use Magento\Framework\App\Action\Action;
 use \Magento\Backend\App\Action\Context;
 use \Magento\Framework\Registry;
 use \Magento\Framework\View\Result\PageFactory;
+use Magento\Framework\App\Request\DataPersistorInterface;
 
 class Edit extends Action
 {
+    /**
+     * @var DataPersistorInterface
+     */
+    protected $dataPersistor;
 
     /**
      * @var \Magento\Framework\View\Result\PageFactory
@@ -33,10 +38,12 @@ class Edit extends Action
     public function __construct(
         Context $context,
         Registry $coreRegistry,
-        PageFactory $resultPageFactory
+        PageFactory $resultPageFactory,
+        DataPersistorInterface $dataPersistor
     ) {
         $this->resultPageFactory = $resultPageFactory;
         $this->_coreRegistry = $coreRegistry;
+        $this->dataPersistor = $dataPersistor;
         parent::__construct($context);
     }
 
@@ -50,9 +57,13 @@ class Edit extends Action
         // 1. Get ID and create model
         $id = $this->getRequest()->getParam('slider_id');
         $model = $this->_objectManager->create(\CasaLum\BannerSlider\Model\Slider::class);
+        $data = $this->dataPersistor->get('banners_slider_slider'); 
 
         // 2. Initial checking
-        if ($id) {
+        if(!empty($data)){
+            $model->setData($data);
+        }
+        else if ($id) {
             $model->load($id);
             if (!$model->getId()) {
                 $this->messageManager->addErrorMessage(__('This banner no longer exists.'));

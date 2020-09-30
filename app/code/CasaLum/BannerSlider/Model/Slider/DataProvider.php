@@ -11,12 +11,19 @@ use Magento\Ui\DataProvider\Modifier\PoolInterface;
 use Magento\Framework\App\ObjectManager;
 use CasaLum\BannerSlider\Model\Banner\FileInfo;
 use Magento\Framework\Filesystem;
+use CasaLum\BannerSlider\Helper\Data as BannerSliderHelper;
 
 /**
  * Class DataProvider
  */
 class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
 {
+    /**
+     * @var BannerSliderHelper
+     */
+    protected $bannerHelper;
+
+
     /**
      * @var \CasaLum\BannerSlider\Model\ResourceModel\Slider\Collection
      */
@@ -55,12 +62,14 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
         $requestFieldName,
         CollectionFactory $sliderCollectionFactory,
         DataPersistorInterface $dataPersistor,
+        BannerSliderHelper $dataHelper,
         array $meta = [],
         array $data = [],
         PoolInterface $pool = null
     ) {
         $this->collection = $sliderCollectionFactory->create();
         $this->dataPersistor = $dataPersistor;
+        $this->bannerHelper = $dataHelper;
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data, $pool);
     }
 
@@ -78,6 +87,7 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
         /** @var \CasaLum\BannerSlider\Model\Slider $slider */
         foreach ($items as $slider) {
             $slider = $this->setBannerRelationship($slider); //agregamos la relacion entre slider y banner
+            $this->bannerHelper->unsetResponsiveItems($slider);
             $this->loadedData[$slider->getId()] = $slider->getData();
         }
 
@@ -86,6 +96,7 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
         if (!empty($data)) {
             $slider = $this->collection->getNewEmptyItem();
             $slider->setData($data);
+            $this->bannerHelper->unsetResponsiveItems($slider);
             $this->loadedData[$slider->getId()] = $slider->getData();
             $this->dataPersistor->clear('banners_slider_slider');
         }
