@@ -122,7 +122,7 @@
                     <item name="enabled" xsi:type="boolean">true</item>
                     <item name="indexField" xsi:type="string">slider_id</item>
                     <item name="clientConfig" xsi:type="array">
-                        <item name="saveUrl" xsi:type="url" path="casalum_banners_slider/banner/inlineEdit" />
+                        <item name="saveUrl" xsi:type="url" path="casalum_banners_slider/slider/inlineEdit" />
                         <item name="validateBeforeSave" xsi:type="boolean">false</item>
                     </item>
                 </item>

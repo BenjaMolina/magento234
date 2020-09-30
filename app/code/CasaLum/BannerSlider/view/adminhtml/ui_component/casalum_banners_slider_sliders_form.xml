@@ -410,25 +410,12 @@
                             <item name="showFallbackReset" xsi:type="boolean">false</item>
                         </item>
                     </argument>
-                     <field name="items">
-                        <argument name="data" xsi:type="array">
-                             <item name="config" xsi:type="array">
-                                <item name="dataType" xsi:type="string">text</item>
-                                <item name="label" xsi:type="string" translate="true">Screen size from</item>
-                                <item name="formElement" xsi:type="string">input</item>
-                                <item name="dataScope" xsi:type="string">items</item>
-                                <item name="showFallbackReset" xsi:type="boolean">false</item>
-                                <item name="validation" xsi:type="array">
-                                    <item name="required-entry" xsi:type="boolean">true</item>
-                                </item>
-                            </item>
-                        </argument>
-                    </field>
+                     
                     <field name="size">
                         <argument name="data" xsi:type="array">
                             <item name="config" xsi:type="array">
                                 <item name="dataType" xsi:type="string">text</item>
-                                <item name="label" xsi:type="string" translate="true">Number of items</item>
+                                <item name="label" xsi:type="string" translate="true">Screen size from</item>
                                 <item name="formElement" xsi:type="string">input</item>
                                 <item name="dataScope" xsi:type="string">size</item>
                                 <item name="showFallbackReset" xsi:type="boolean">false</item>
@@ -437,7 +424,21 @@
                                 </item>
                             </item>
                         </argument>
-                    </field>                   
+                    </field>        
+                    <field name="items">
+                        <argument name="data" xsi:type="array">
+                             <item name="config" xsi:type="array">
+                                <item name="dataType" xsi:type="string">text</item>
+                                <item name="label" xsi:type="string" translate="true">Number of items</item>
+                                <item name="formElement" xsi:type="string">input</item>
+                                <item name="dataScope" xsi:type="string">items</item>
+                                <item name="showFallbackReset" xsi:type="boolean">false</item>
+                                <item name="validation" xsi:type="array">
+                                    <item name="required-entry" xsi:type="boolean">true</item>
+                                </item>
+                            </item>
+                        </argument>
+                    </field>           
                     <actionDelete>
                         <argument name="data" xsi:type="array">
                             <item name="config" xsi:type="array">

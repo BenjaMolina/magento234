@@ -112,8 +112,8 @@ class Slider extends AbstractDb
             $object->setDesign(0);
         }
 
-        if(!is_numeric($status) || empty($status)){
-            throw new LocalizedException(__("The Status must be a numeric and is required"));
+        if(!is_numeric($status)){
+            throw new LocalizedException(__("The Status must be a numeric"));
         }
 
         if(!empty($autoPlayTimeout) && !is_numeric($autoPlayTimeout) ){
@@ -133,8 +133,6 @@ class Slider extends AbstractDb
         } else {
             $object->setResponsiveItems(null);
         }
-
-        //throw new LocalizedException(__("The banner name is required"));
 
         return parent::_beforeSave($object);
 
