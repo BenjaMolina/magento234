@@ -1,0 +1,37 @@
+.owl-carousel .owl-nav button.owl-next,
+.owl-carousel .owl-nav button.owl-prev {
+  position: absolute;
+  top: 48%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  width: 30px;
+  height: 60px;
+  box-shadow: none;
+  border-radius: 0px;
+}
+.owl-carousel .owl-nav button.owl-next:first-child,
+.owl-carousel .owl-nav button.owl-prev:first-child {
+  left: 15px;
+}
+.owl-carousel .owl-nav button.owl-next:last-child,
+.owl-carousel .owl-nav button.owl-prev:last-child {
+  right: -15px;
+}
+.owl-carousel .owl-nav button.owl-next span,
+.owl-carousel .owl-nav button.owl-prev span {
+  font-size: 20px;
+}
+.owl-carousel:hover .owl-nav button.owl-next,
+.owl-carousel:hover .owl-nav button.owl-prev {
+  background-color: #00000026;
+  color: #fff;
+  opacity: 1;
+}
+.owl-carousel:hover .owl-nav button.owl-next:hover,
+.owl-carousel:hover .owl-nav button.owl-prev:hover {
+  background-color: #444;
+}

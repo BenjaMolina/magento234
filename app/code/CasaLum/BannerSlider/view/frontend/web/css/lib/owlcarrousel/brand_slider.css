@@ -1,0 +1,37 @@
+
+.brand-slider.owl-carousel .owl-stage-outer {
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    position: relative;
+    padding: 5px 0px;
+}
+
+.brand-slider.owl-carousel .owl-nav button.owl-next:first-child,
+.brand-slider.owl-carousel .owl-nav button.owl-prev:first-child {
+    left: 0px;
+}
+.brand-slider.owl-carousel .owl-nav button.owl-next:last-child,
+.brand-slider.owl-carousel .owl-nav button.owl-prev:last-child {
+    right: -45px;
+}
+
+.brand-slider.owl-carousel:hover .owl-nav button.owl-next,
+.brand-slider.owl-carousel:hover .owl-nav button.owl-prev{
+    width: 44px;
+    height: 44px;
+    line-height: 40px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    color: #aaa;
+    margin: 0;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+
+.brand-slider.owl-carousel:hover .owl-nav button.owl-next:hover,
+.brand-slider.owl-carousel:hover .owl-nav button.owl-prev:hover {
+    background-color: #b14671;
+    border: 0px;
+    color: #fff;
+}
