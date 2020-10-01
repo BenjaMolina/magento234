@@ -13,29 +13,23 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\Model\AbstractModel;
 use CasaLum\BannerSlider\Model\BannerFactory;
 use CasaLum\BannerSlider\Model\Config\Source\Effect;
 use CasaLum\BannerSlider\Model\ResourceModel\Banner\Collection;
 use CasaLum\BannerSlider\Model\Slider;
 use CasaLum\BannerSlider\Model\SliderFactory;
-use Magento\Framework\App\Helper\AbstractHelper;
-use Magento\Framework\Model\AbstractModel;
-use Magento\Framework\App\ProductMetadataInterface;
-use Magento\Framework\App\ObjectManager;
-use Magento\Framework\Json\Helper\Data as JsonHelper;
+use CasaLum\BannerSlider\Helper\AbstractData;
+
+
 
 /**
  * Class Data
  * @package Mageplaza\BannerSlider\Helper
  */
-class Data extends AbstractHelper
+class Data extends AbstractData
 {
     const CONFIG_MODULE_PATH = 'csbannerslider';
-
-     /**
-     * @type ObjectManagerInterface
-     */
-    protected $objectManager;
 
     /**
      * @var BannerFactory
@@ -81,9 +75,8 @@ class Data extends AbstractHelper
         $this->httpContext   = $httpContext;
         $this->bannerFactory = $bannerFactory;
         $this->sliderFactory = $sliderFactory;
-        $this->objectManager = $objectManager;
-        $this->storeManager = $storeManager;
-        parent::__construct($context);
+
+        parent::__construct($context, $objectManager, $storeManager);
     }
 
     /**
@@ -222,94 +215,6 @@ class Data extends AbstractHelper
             ->where('to_date is null OR to_date >= ?', $this->date->date());*/
 
         return $collection;
-    }
-
-
-    /**
-     * @param $ver
-     * @param string $operator
-     *
-     * @return mixed
-     */
-    public function versionCompare($ver, $operator = '>=')
-    {
-        $productMetadata = $this->objectManager->get(ProductMetadataInterface::class);
-        $version = $productMetadata->getVersion(); //will return the magento version
-
-        return version_compare($version, $ver, $operator);
-    }
-
-    /**
-     * @param $data
-     *
-     * @return string
-     */
-    public function serialize($data)
-    {
-        if ($this->versionCompare('2.2.0')) {
-            return self::jsonEncode($data);
-        }
-
-        return $this->getSerializeClass()->serialize($data);
-    }
-
-    /**
-     * @param $string
-     *
-     * @return mixed
-     */
-    public function unserialize($string)
-    {
-        if ($this->versionCompare('2.2.0')) {
-            return self::jsonDecode($string);
-        }
-
-        return $this->getSerializeClass()->unserialize($string);
-    }
-
-    /**
-     * Encode the mixed $valueToEncode into the JSON format
-     *
-     * @param mixed $valueToEncode
-     *
-     * @return string
-     */
-    public static function jsonEncode($valueToEncode)
-    {
-        try {
-            $encodeValue = self::getJsonHelper()->jsonEncode($valueToEncode);
-        } catch (Exception $e) {
-            $encodeValue = '{}';
-        }
-
-        return $encodeValue;
-    }
-
-    /**
-     * Decodes the given $encodedValue string which is
-     * encoded in the JSON format
-     *
-     * @param string $encodedValue
-     *
-     * @return mixed
-     */
-    public static function jsonDecode($encodedValue)
-    {
-        try {
-            $decodeValue = self::getJsonHelper()->jsonDecode($encodedValue);
-        } catch (Exception $e) {
-            $decodeValue = [];
-        }
-
-        return $decodeValue;
-    }
-
-    /**
-     * @return JsonHelper|mixed
-     */
-    public static function getJsonHelper()
-    {
-        return ObjectManager::getInstance()->get(JsonHelper::class);
     }
 
     public function unsetResponsiveItems(AbstractModel $slider)
