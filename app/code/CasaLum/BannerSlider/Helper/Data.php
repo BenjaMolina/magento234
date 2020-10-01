@@ -89,7 +89,6 @@ class Data extends AbstractData
         $config = $slider->getData();
 
         $defaultOpt    = $this->getDefaultConfig($config);
-        $defaultOpt['margin'] = 10; //Esto esta harcodeado
         $responsiveOpt = $this->getResponsiveConfig($slider);
         $effectOpt     = $this->getEffectConfig($slider);
 
@@ -109,7 +108,7 @@ class Data extends AbstractData
         foreach ($configs as $key => $value) {
             if (in_array(
                 $key,
-                ['autoWidth', 'autoHeight', 'loop', 'nav', 'dots', 'lazyLoad', 'autoplay', 'autoplayTimeout']
+                ['autoWidth', 'autoHeight', 'loop', 'nav', 'dots', 'lazyLoad', 'autoplay', 'autoplayTimeout','margin']
             )) {
                 $basicConfig[$key] = (int) $value;
             }
