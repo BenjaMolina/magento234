@@ -28,4 +28,8 @@ class BannerSlider extends Slider implements BlockInterface
 
         return parent::getBannerCollection();
     }
+
+    public function getIdSlider() {
+        return $this->getSliderId() || "";
+    }
 }

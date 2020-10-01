@@ -86,11 +86,7 @@ class Data extends AbstractData
      */
     public function getBannerOptions($slider)
     {
-        if ($slider && $slider->getDesign() === '1') { //not use Config
-            $config = $slider->getData();
-        } else {
-            $config = $this->getModuleConfig('mpbannerslider_design');
-        }
+        $config = $slider->getData();
 
         $defaultOpt    = $this->getDefaultConfig($config);
         $defaultOpt['margin'] = 10; //Esto esta harcodeado
@@ -129,16 +125,11 @@ class Data extends AbstractData
      */
     public function getResponsiveConfig($slider = null)
     {
-        $defaultResponsive = $this->getModuleConfig('mpbannerslider_design/responsive');
         $sliderResponsive  = $slider->getIsResponsive();
 
-        if ((!$defaultResponsive && !$sliderResponsive) || (!$sliderResponsive && $slider->getDesign())) {
-            return ['items' => 1];
-        }
+        if(!$sliderResponsive) return ['items' => 1];
 
-        $responsiveItemsValue = $slider->getDesign()
-            ? $slider->getResponsiveItems()
-            : $this->getModuleConfig('mpbannerslider_design/item_slider');
+        $responsiveItemsValue = $slider->getResponsiveItems();
 
         try {
             $responsiveItems = $this->unserialize($responsiveItemsValue);
@@ -203,16 +194,8 @@ class Data extends AbstractData
         /** @var \Mageplaza\BannerSlider\Model\ResourceModel\Slider\Collection $collection */
         $collection = $this->sliderFactory->create()
             ->getCollection()
-            ->addFieldToFilter('customer_group_ids', [
-                'finset' => $this->httpContext->getValue(\Magento\Customer\Model\Context::CONTEXT_GROUP)
-            ])
             ->addFieldToFilter('status', 1)
             ->addOrder('priority');
-
-        $collection->getSelect()
-            ->where('FIND_IN_SET(0, store_ids) OR FIND_IN_SET(?, store_ids)', $this->storeManager->getStore()->getId());
-            /*->where('from_date is null OR from_date <= ?', $this->date->date())
-            ->where('to_date is null OR to_date >= ?', $this->date->date());*/
 
         return $collection;
     }

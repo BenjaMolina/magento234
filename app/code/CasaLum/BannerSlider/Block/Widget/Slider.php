@@ -77,10 +77,20 @@ class Slider extends Template
     public function getBannerCollection()
     {
         $collection = [];
-        if ($this->getSliderId()) {
-            $collection = $this->helperData->getBannerCollection($this->getSliderId())->addFieldToFilter('status', 1);
+        $sliderId = $this->getSliderId();
+        if ($sliderId) {
+            $collection = $this->helperData->getBannerCollection($sliderId)->addFieldToFilter('status', 1);
         }
 
         return $collection;
+    }
+
+    /**
+     * @return false|string
+     */
+    public function getBannerOptions()
+    {
+        $slider = $this->getSlider();
+        return $this->helperData->getBannerOptions($slider);
     }
 }
