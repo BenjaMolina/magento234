@@ -82,7 +82,7 @@ class Data extends AbstractHelper
         $this->bannerFactory = $bannerFactory;
         $this->sliderFactory = $sliderFactory;
         $this->objectManager = $objectManager;
-
+        $this->storeManager = $storeManager;
         parent::__construct($context);
     }
 
@@ -191,7 +191,7 @@ class Data extends AbstractHelper
         $collection = $this->bannerFactory->create()->getCollection();
 
         $collection->join(
-            ['banner_slider' => $collection->getTable('mageplaza_bannerslider_banner_slider')],
+            ['banner_slider' => $collection->getTable('casalum_bannerslider_banner_slider')],
             'main_table.banner_id=banner_slider.banner_id AND banner_slider.slider_id=' . $id,
             ['position']
         );
@@ -217,9 +217,9 @@ class Data extends AbstractHelper
             ->addOrder('priority');
 
         $collection->getSelect()
-            ->where('FIND_IN_SET(0, store_ids) OR FIND_IN_SET(?, store_ids)', $this->storeManager->getStore()->getId())
-            ->where('from_date is null OR from_date <= ?', $this->date->date())
-            ->where('to_date is null OR to_date >= ?', $this->date->date());
+            ->where('FIND_IN_SET(0, store_ids) OR FIND_IN_SET(?, store_ids)', $this->storeManager->getStore()->getId());
+            /*->where('from_date is null OR from_date <= ?', $this->date->date())
+            ->where('to_date is null OR to_date >= ?', $this->date->date());*/
 
         return $collection;
     }

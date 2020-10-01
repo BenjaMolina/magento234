@@ -1,0 +1,58 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+ /** @var \CasaLum\BannerSlider\Block\Widget\BannerSlider $block */
+$banners = $block->getBannersCollection();
+?>
+<?php if ($banners->getSize()): ?>
+    <div class="owl-carousel owl-theme home-slider">
+        <?php foreach ($banners as $banner): ?>
+            <div class="item">
+                <?php if ($banner->getUrl()): ?>
+                    <a href="<?= $banner->getUrl(); ?>" title="<?= $banner->getName(); ?>">
+                <?php endif; ?>
+                <img src="<?= $banner->getImageUrl(); ?>" alt="<?= $banner->getName(); ?>" width="100%"/>
+                <?php if ($banner->getUrl()): ?>
+                    </a>
+                <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <script type="text/javascript">
+        require([
+            'jquery', 
+            'owlcarousel'
+        ], function($) {
+            $('.home-slider').owlCarousel({
+                center: false,
+                startPosition: 0,
+                margin: 20,
+                nav: 1,
+                loop: 1,
+                dots: 1,
+                lazyload: 1,
+                dotsSpeed: 1000,
+                slideBy: 1,
+                autoplay: 1,
+                autoplayTimeout: 5000,
+                autoplayHoverPause: true,
+                autoplaySpeed: 800,
+                navSpeed: 1000,
+                mouseDrag: true,
+                responsiveRefreshRate: 100,
+                responsive: {
+                    0: {
+                        items:1
+                    },
+                    768: {
+                        items:3
+                    }
+                },
+                
+            });
+        });
+    </script>
+<?php endif; ?>
