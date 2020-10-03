@@ -185,6 +185,18 @@ class ImageUploader
     }
 
     /**
+     * Return if the Image URL exists in other directory
+     *
+     * @param string $url
+     *
+     * @return boolean
+     */
+    public function getIsOtherDirectoryImage($url)
+    {
+        return !( strpos($this->getBaseTmpPath(), $url) || strpos($this->getBasePath(), $url) || strpos($url, '/'));
+    }
+
+    /**
      * Checking file for moving and move it
      *
      * @param string $imageName

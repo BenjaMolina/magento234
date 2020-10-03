@@ -112,6 +112,15 @@ class DataProvider extends \Magento\Ui\DataProvider\ModifierPoolDataProvider
             $image[0]['size'] = isset($stat) ? $stat['size'] : 0;
             $image[0]['type'] = $mime;
         }
+        else if($this->getFileInfo()->isExistInOtherDirectory($fileName)){
+            $isOtherPath = true;
+            $stat = $this->getFileInfo()->getStatInOtherDirectory($fileName);
+            $mime = $this->getFileInfo()->getMimeTypeInOtherDirectory($fileName);
+            $image[0]['name'] = $fileName;
+            $image[0]['url'] = $banner->getImageUrl($fileName, $isOtherPath);
+            $image[0]['size'] = isset($stat) ? $stat['size'] : 0;
+            $image[0]['type'] = $mime;
+        }
 
         $banner->setImage($image);
         

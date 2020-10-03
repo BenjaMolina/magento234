@@ -13,7 +13,7 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Model\AbstractModel;
 use CasaLum\BannerSlider\Model\Banner as BannerModel;
-
+use CasaLum\BannerSlider\Model\Banner\ImageUploader;
 
 /**
  * CMS block model
@@ -21,6 +21,12 @@ use CasaLum\BannerSlider\Model\Banner as BannerModel;
  */
 class Banner extends AbstractDb
 {
+    /**
+     * @var ImageUploader
+     */
+    protected $_imageUploader;
+
+
     /**
      * @var \Magento\Framework\App\RequestInterface
      */
@@ -53,11 +59,13 @@ class Banner extends AbstractDb
         DateTime $date,
         ManagerInterface $eventManager,
         Context $context,
-        RequestInterface $request
+        RequestInterface $request,
+        ImageUploader $imageUploader
     ) {
         $this->date         = $date;
         $this->eventManager = $eventManager;
         $this->_request     = $request;
+        $this->_imageUploader = $imageUploader;
 
         parent::__construct($context);
         $this->bannerSliderTable = $this->getTable('casalum_bannerslider_banner_slider'); 
@@ -106,8 +114,18 @@ class Banner extends AbstractDb
         if(!empty( $image)){
             /**Lo que guardamos es el nombre de la imagen */
             if($this->_request->getParam('isAjax')) $object->setImage($image); //Para cuando es inlineEdit
+            
+            if(is_array($image)){
+                $url = $image[0]['url'] ?: '';
+                $isOtherDirectoryImage = $this->_imageUploader->getIsOtherDirectoryImage($url);
+                
+                if(!empty($url) && $isOtherDirectoryImage){
+                    $url = str_replace('/pub/media/',"",$image[0]['url']);
+                    $object->setImage($url);
+                } 
+                else $object->setImage($image[0]['name']);
+            }
 
-            if(is_array($image)) $object->setImage($image[0]['name']);
         }else{
             throw new LocalizedException(__("The image is required"));
         }
@@ -119,7 +137,7 @@ class Banner extends AbstractDb
         if(!is_numeric($slider)){ 
             throw new LocalizedException(__("The Slider is required"));
         }
-
+        //throw new LocalizedException(__("The Slider is required"));
         return $this;
     }
 
@@ -172,9 +190,10 @@ class Banner extends AbstractDb
         $oldSliders = $banner->getSlidersRelationship();
 
         //throw new LocalizedException(__("The Slider is required"));
-        $insert = empty($oldSliders) ? true : false;
-        $update = in_array($slider, $oldSliders) ? true : false;
-        $delete = (!empty($oldSliders) && !in_array($slider, $oldSliders)) ? true : false;
+        $assocKeyIdSlider = array_column($oldSliders, 'slider_id', 'slider_id');
+        $insert = (empty($oldSliders) && !in_array($slider, $assocKeyIdSlider)) ? true : false;
+        $update = in_array($slider, $assocKeyIdSlider) ? true : false;
+        $delete = (!empty($oldSliders) &&  !in_array($slider, $assocKeyIdSlider)) ? true : false;
         /*$insert  = array_diff($sliders, $oldSliders);
         $delete  = array_diff($oldSliders, $sliders);*/
         $adapter = $this->getConnection();
@@ -198,6 +217,11 @@ class Banner extends AbstractDb
             }*/
             $adapter->insertMultiple($this->bannerSliderTable, $data);
         }
+        if(!empty($update)){
+            $where = ['slider_id = ?' => (int) $slider, 'banner_id = ?' => (int) $id];
+            $bind  = ['position' => (int) $banner->getPosition()];
+            $adapter->update($this->bannerSliderTable, $bind, $where);
+        }
         if (!empty($insert) || !empty($delete)) {
             /*$sliderIds = array_unique(array_merge(array_keys($insert), array_keys($delete)));
             $this->eventManager->dispatch(
@@ -206,7 +230,7 @@ class Banner extends AbstractDb
             );*/
 
             $banner->setIsChangedSliderList(true);
-            /*$sliderIds = array_keys($insert + $delete);
+            /*$sliderIds = array_keys($insert + $delete + $update);
             $banner->setAffectedSliderIds($sliderIds);*/
         }
 

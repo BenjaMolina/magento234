@@ -76,7 +76,7 @@ class Banner extends AbstractModel
      * @return bool|string
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getImageUrl($imageName = null)
+    public function getImageUrl($imageName = null, $isOtherPath = false)
     {
         $url = '';
         $image = $imageName;
@@ -84,10 +84,11 @@ class Banner extends AbstractModel
             $image = $this->getData('image');
         }
         if ($image) {
+            $mediaPath = $isOtherPath ? '' : FileInfo::ENTITY_MEDIA_PATH;
             if (is_string($image)) {
                 $url = $this->_getStoreManager()->getStore()->getBaseUrl(
                     \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-                ).FileInfo::ENTITY_MEDIA_PATH .'/'. $image;
+                ).$mediaPath .'/'. $image;
             } else {
                 throw new \Magento\Framework\Exception\LocalizedException(
                     __('Something went wrong while getting the image url.')

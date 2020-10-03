@@ -70,8 +70,8 @@ class Save extends Action
             if (empty($data['banner_id'])) {
                 $data['banner_id'] = null;
             }
-            if (empty($data['order'])) {
-                $data['order'] = 0;
+            if (empty($data['position'])) {
+                $data['position'] = 0;
             }
             
             /*Ayuda a que si hay un error al guardar, la imagen que se cargo No se pierda y se muestre  */
