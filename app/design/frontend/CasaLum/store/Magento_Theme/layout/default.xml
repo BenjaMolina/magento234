@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <referenceBlock name="logo">
+        <!--<referenceBlock name="logo">
             <arguments>
                 <argument name="logo_file" xsi:type="string">images/logo.png</argument>
                 <argument name="logo_width" xsi:type="number">164</argument>
                 <argument name="logo_height" xsi:type="number">65</argument>
                 <argument name="logo_alt" xsi:type="string">Casa Lum Store</argument>
             </arguments>
-        </referenceBlock>
+        </referenceBlock>-->
 
         <!--  HEADER   -->
         <referenceContainer name="header.panel.wrapper">
@@ -33,6 +33,8 @@
         </referenceContainer>
 
         <move element="header.panel"  destination="header-wrapper" after="top.search" />
+        <referenceBlock name="report.bugs" remove="true"/>
+        <move element="copyright" destination="before.body.end"/>
 
         <!--
             <block class="Magento\Framework\View\Element\Template"
@@ -47,11 +49,11 @@
         
         
 
-        <referenceBlock name="content">
+        <!--<referenceBlock name="content">
             <block class="Magento\Framework\View\Element\Template"
                    name="casalum.store.content.container"
                    template="CasaLum_StoresTheme::content.phtml" />
-        </referenceBlock>
+        </referenceBlock>-->
 
 
 
