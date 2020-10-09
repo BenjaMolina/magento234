@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+    	<add 
+			id="CasaLum_BaseModulos::basemodulos" 
+			title="New Moduls" 
+			translate="title" 
+			module="CasaLum_BaseModulos" 
+			sortOrder="20" 
+			action="cms/page"
+			resource="CasaLum_BaseModulos::basemodulos" />
+
+		<add 
+			id="CasaLum_BaseModulos::basemodulos_setting" 
+			parent="CasaLum_BaseModulos::basemodulos" 
+			title="Configuration" 
+			translate="title" 
+			module="CasaLum_BaseModulos"
+			sortOrder="100" 
+			resource="CasaLum_BaseModulos::basemodulos_setting"/>
+    </menu>
+</config>
