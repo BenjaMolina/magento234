@@ -6,11 +6,9 @@
             <general>
                 <active>1</active>
                 <show_shipping_address>1</show_shipping_address>
-                <checkout_title>Express checkout</checkout_title>
+                <checkout_title>One Step Checkout</checkout_title>
                 <checkout_description></checkout_description>
-                <show_newsletter>0</show_newsletter>
 				<show_discount>1</show_discount>
-				<enable_items_image>1</enable_items_image>
 				<show_login_link>1</show_login_link>
 				<login_link_title>Already have an account? Click Here to login</login_link_title>
             </general>
