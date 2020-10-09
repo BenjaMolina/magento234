@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <opcheckout>
+            <general>
+                <active>1</active>
+                <show_shipping_address>1</show_shipping_address>
+                <checkout_title>Express checkout</checkout_title>
+                <checkout_description></checkout_description>
+                <show_newsletter>0</show_newsletter>
+				<show_discount>1</show_discount>
+				<enable_items_image>1</enable_items_image>
+				<show_login_link>1</show_login_link>
+				<login_link_title>Already have an account? Click Here to login</login_link_title>
+            </general>
+            <terms_and_conditions>
+				<terms_text>Terms and Conditions</terms_text>
+				<terms_content>Terms and Conditions Content</terms_content>
+				<terms_warning>Terms and Conditions Warning</terms_warning>
+				<terms_warning_content>Please checked Terms and Conditions</terms_warning_content>
+            </terms_and_conditions>
+        </opcheckout>
+    </default>
+</config>
