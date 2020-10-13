@@ -36,7 +36,7 @@ define(
 
         return Component.extend({
             defaults: {
-                template: 'Magento_Checkout/shipping-method/list'
+                template: 'Magento_Checkout/shipping-method/list',
             },
             default_shipping_carrier: ko.observable(window.checkoutConfig.default_shipping),
             visible: ko.observable(!quote.isVirtual()),
