@@ -404,6 +404,7 @@
                                                     </item>
                                                     <item name="cart_items" xsi:type="array">
                                                         <item name="component" xsi:type="string">Magento_Checkout/js/view/summary/cart-items</item>
+                                                        <item name="displayArea" xsi:type="string">item-review</item>
                                                         <item name="children" xsi:type="array">
                                                             <item name="details" xsi:type="array">
                                                                 <item name="component" xsi:type="string">Magento_Checkout/js/view/summary/item/details</item>
@@ -446,6 +447,21 @@
                                                 </item>
                                             </item>
                                         </item>
+                                    </item>
+                                    <item name="discount" xsi:type="array">
+                                        <item name="component" xsi:type="string">Magento_Checkout/js/view/payment/discount</item>
+                                        <item name="displayArea" xsi:type="string">discount</item>
+                                        <item name="children" xsi:type="array">
+                                            <item name="errors" xsi:type="array">
+                                                <item name="sortOrder" xsi:type="string">0</item>
+                                                <item name="component" xsi:type="string">Magento_SalesRule/js/view/payment/discount-messages</item>
+                                                <item name="displayArea" xsi:type="string">messages</item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                    <item name="ost-terms-and-conditions" xsi:type="array">
+                                        <item name="component" xsi:type="string">Magento_Checkout/js/view/ost-terms-and-conditions</item>
+                                        <item name="displayArea" xsi:type="string">ost-terms-and-conditions</item>
                                     </item>
                                 </item>
                             </item>
