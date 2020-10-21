@@ -52,6 +52,33 @@
         <!-- ko foreach: getRegion('ost-terms-and-conditions') -->
         <!-- ko template: getTemplate() --><!-- /ko -->
         <!--/ko-->
+
+        <div class="button-set clearfix button-opcheckout">
+            <div class="clear"></div>
+            <button id="opcheckout-button-place-order" type="button"
+                    class="btn-proceed-checkout opcheckout-btn-checkout opcheckout-place"
+                    data-bind="attr:{title:$t('Place Order')},click:prepareToPlaceOrder,enable:enableCheckout">
+                <span>
+                    <span class="title" data-bind="i18n:'Place order now'"></span>
+                </span>
+            </button>
+            <button style="display: none"
+                    id="opcheckout-button-continue-to-paypal" type="button"
+                    class="btn-continue-to-paypal action primary" 
+                    data-bind="attr:{title:$t('Place Order')}">
+                <span>
+                    <span class="title" data-bind="i18n:'Continue to PayPal'"></span>
+                </span>
+            </button>
+        </div>
+        <!--ko if:placingOrder-->
+        <div id="opcheckout-place-order-loading" class="show">
+            <p data-bind="i18n:'Please wait, processing your order...'"></p>
+        </div>
+        <!--/ko-->
+        <div id="opcheckout-error-messages" class="show" data-bind="fadeVisible:errorMessage">
+            <p data-bind="i18n:errorMessage"></p>
+        </div>
     </ol>
 </div>
 

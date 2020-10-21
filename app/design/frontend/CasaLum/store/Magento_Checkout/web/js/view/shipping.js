@@ -26,7 +26,8 @@ define([
     'Magento_Checkout/js/checkout-data',
     'uiRegistry',
     'mage/translate',
-    'Magento_Checkout/js/model/shipping-rate-service'
+    'Magento_Checkout/js/model/shipping-rate-service',
+    'Magento_Checkout/js/model/validate-shipping'
 ], function (
     $,
     _,
@@ -49,7 +50,9 @@ define([
     checkoutDataResolver,
     checkoutData,
     registry,
-    $t
+    $t,
+    shippingRateService,
+    ValidateShipping
 ) {
     'use strict';
 
@@ -90,20 +93,26 @@ define([
                     this.sortOrder
                 );
             }*/
-            checkoutDataResolver.resolveShippingAddress();
-
-            hasNewAddress = addressList.some(function (address) {
-                return address.getType() == 'new-customer-address'; //eslint-disable-line eqeqeq
-            });
-
-            this.isNewAddressAdded(hasNewAddress);
-
-            this.isFormPopUpVisible.subscribe(function (value) {
-                if (value) {
-                    self.getPopUp().openModal();
+            if(ValidateShipping.validating() == false){
+                shippingRateService();
+                if(typeof shippingRatesValidator.initFields != 'undefined'){
+                    shippingRatesValidator.initFields(fieldsetName); 
                 }
-            });
 
+                checkoutDataResolver.resolveShippingAddress();
+
+                hasNewAddress = addressList.some(function (address) {
+                    return address.getType() == 'new-customer-address'; //eslint-disable-line eqeqeq
+                });
+
+                this.isNewAddressAdded(hasNewAddress);
+
+                this.isFormPopUpVisible.subscribe(function (value) {
+                    if (value) {
+                        self.getPopUp().openModal();
+                    }
+                });
+            }
             registry.async('checkoutProvider')(function (checkoutProvider) {
                 var shippingAddressData = checkoutData.getShippingAddressFromData();
 
@@ -116,7 +125,7 @@ define([
                 checkoutProvider.on('shippingAddress', function (shippingAddrsData) {
                     checkoutData.setShippingAddressFromData(shippingAddrsData);
                 });
-                shippingRatesValidator.initFields(fieldsetName);
+                self.source = checkoutProvider;
             });
 
             return this;

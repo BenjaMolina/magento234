@@ -25,7 +25,7 @@
                     </item>
                    <item name="components" xsi:type="array">
                             <item name="checkout" xsi:type="array">
-                                <item name="component" xsi:type="string">uiComponent</item>
+                                <item name="component" xsi:type="string">Magento_Checkout/js/view/onepage</item>
                                 <item name="config" xsi:type="array">
                                     <item name="template" xsi:type="string">Magento_Checkout/onepage</item>
                                 </item>
