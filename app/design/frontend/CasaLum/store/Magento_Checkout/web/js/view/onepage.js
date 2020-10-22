@@ -7,10 +7,10 @@ define(
         'Magento_Checkout/js/model/quote',
         'Magento_Checkout/js/action/validate-shipping-info',
         'Magento_Checkout/js/action/showLoader',
-        //'Rokanthemes_OpCheckout/js/action/save-shipping-address',
-        //'Rokanthemes_OpCheckout/js/action/set-shipping-information',
-        //'Rokanthemes_OpCheckout/js/model/shipping-rate-service',
-        //'Rokanthemes_OpCheckout/js/action/save-additional-information',
+        'Magento_Checkout/js/action/save-shipping-address',
+        'Magento_Checkout/js/action/set-shipping-information',
+        'Magento_Checkout/js/model/shipping-rate-service',
+        //'Magento_Checkout/js/action/save-additional-information',
         'Magento_Ui/js/modal/alert'
     ],
     function (
@@ -21,9 +21,9 @@ define(
         quote,
         ValidateShippingInfo,
         Loader,
-        //SaveAddressBeforePlaceOrder,
-        //setShippingInformationAction,
-        //shippingRateService,
+        SaveAddressBeforePlaceOrder,
+        setShippingInformationAction,
+        shippingRateService,
         //saveAdditionalInformation,
         alertPopup
     ) {
@@ -40,9 +40,6 @@ define(
             placingOrder: ko.observable(false),
             initialize: function () {
                 this._super();
-                if($("#co-payment-form button[type='submit']").length > 0) {
-                    $("#co-payment-form button[type='submit']").addClass('disabled');
-                }
             },
             prepareToPlaceOrder: function(){
                 var self = this;
@@ -64,10 +61,11 @@ define(
 						if($("#terms_and_conditions_checkbox").is(':checked')){
 							self.placingOrder(true);
 							Loader().all(true);
-							var deferred = saveAdditionalInformation();
+							/*var deferred = saveAdditionalInformation();
 							deferred.done(function () {
 								self.placeOrder();
-							});
+                            });*/
+                            self.placeOrder();
 						}
 						else{
 							alertPopup({
@@ -87,10 +85,11 @@ define(
 					else{
 						self.placingOrder(true);
 						Loader().all(true);
-						var deferred = saveAdditionalInformation();
+						/*var deferred = saveAdditionalInformation();
 						deferred.done(function () {
 							self.placeOrder();
-						});
+                        });*/
+                        self.placeOrder();
 					}
                 }else{
 
