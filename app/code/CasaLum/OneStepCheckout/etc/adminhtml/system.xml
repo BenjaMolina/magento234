@@ -31,25 +31,12 @@
                 <field id="checkout_description" translate="label" sortOrder="50" type="textarea" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Checkout description</label>
                 </field>
-                <field id="show_newsletter" translate="label" sortOrder="60" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Show Newsletter checkbox</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="newsletter_default_checked" translate="label" sortOrder="70" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Newsletter checkbox checked by default</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <depends>
-                        <field id="show_newsletter">1</field>
-                    </depends>
-                </field>
+               
                 <field id="show_discount" translate="label" sortOrder="80" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Show Discount Code section</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="enable_items_image" translate="label" sortOrder="90" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Enable Product Thumbnail Shown In Order Review Section</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
+                
 				<field id="show_login_link" translate="label" sortOrder="100" type="select" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Show Login Link</label>

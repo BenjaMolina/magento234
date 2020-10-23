@@ -2,7 +2,7 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
-        <opcheckout>
+        <onestepcheckout>
             <general>
                 <active>1</active>
                 <show_shipping_address>1</show_shipping_address>
@@ -18,6 +18,6 @@
 				<terms_warning>Terms and Conditions Warning</terms_warning>
 				<terms_warning_content>Please checked Terms and Conditions</terms_warning_content>
             </terms_and_conditions>
-        </opcheckout>
+        </onestepcheckout>
     </default>
 </config>
