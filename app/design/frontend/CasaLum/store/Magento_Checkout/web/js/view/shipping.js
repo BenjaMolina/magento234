@@ -27,7 +27,8 @@ define([
     'uiRegistry',
     'mage/translate',
     'Magento_Checkout/js/model/shipping-rate-service',
-    'Magento_Checkout/js/model/validate-shipping'
+    'Magento_Checkout/js/model/validate-shipping',
+    'Magento_Customer/js/customer-data'
 ], function (
     $,
     _,
@@ -52,11 +53,13 @@ define([
     registry,
     $t,
     shippingRateService,
-    ValidateShipping
+    ValidateShipping,
+    storage
 ) {
     'use strict';
 
     var popUp = null;
+    const cacheKey = 'checkout-data';
 
     return Component.extend({
         defaults: {
@@ -100,6 +103,14 @@ define([
                 }
 
                 checkoutDataResolver.resolveShippingAddress();
+                /**
+                 * Observador para cuando hay cambios en cualquier input de las direccion de envio
+                 */
+                const addressFormDataObservable = self.getAddressFromDataObservable();
+                addressFormDataObservable.subscribe(function(value){
+                    //console.log(value);
+                    const aaa = checkoutData.getShippingAddressFromData();
+                });
 
                 hasNewAddress = addressList.some(function (address) {
                     return address.getType() == 'new-customer-address'; //eslint-disable-line eqeqeq
@@ -227,6 +238,11 @@ define([
                 this.source.trigger('shippingAddress.custom_attributes.data.validate');
             }
         },
+
+        getAddressFromDataObservable: function(){
+            const data = storage.get(cacheKey);
+            return data;
+        }
 
     });
 });
