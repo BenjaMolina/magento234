@@ -4,6 +4,121 @@
     data-bind="fadeVisible: visible(), blockLoader: isLoading"
     role="presentation">
     <div class="checkout-shipping-method">
+        <div class="step-title"
+            translate="'Shipping Methods'"
+            data-role="title" />
+        
+        <each args="getRegion('before-shipping-method-form')" render="" />
+
+        <div id="checkout-step-shipping_method"
+             class="step-content"
+             data-role="content"
+             role="tabpanel"
+             aria-hidden="false">
+
+            <form id="co-shipping-method-form"
+                class="form methods-shipping"
+                if="rates().length"
+                submit="setShippingInformation"
+                novalidate="novalidate">
+
+                <div id="checkout-shipping-method-load">
+                    <table class="table-checkout-shipping-method">
+                        <thead>
+                        <tr class="row">
+                            <th class="col col-method" translate="'Select Method'"></th>
+                            <th class="col col-price" translate="'Price'"></th>
+                            <th class="col col-method" translate="'Method Title'"></th>
+                            <th class="col col-carrier" translate="'Carrier Title'"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <!--ko foreach: { data: getShippingList(), as: 'carrier'}-->
+                                <!--ko foreach: { data: carrier.methods, as: 'method'}-->
+                                    <tr class="row"
+                                        click="$parents[1].selectShippingMethod.bind($parents[1])">
+                                        <!-- ko ifnot: method.error_message -->
+
+                                            <!-- ko if: carrier.methods.length == 1 && $parents[1].getShippingList().length == 1 -->
+                                                <td class="col col-method">
+                                                    <input type="radio"
+                                                        class="radio"
+                                                        data-bind="attr: {
+                                                            checked: carrier.methods.length == 1,
+                                                            'value' : method.carrier_code + '_' + method.method_code,
+                                                            'id': 's_method_' + method.method_code,
+                                                            'aria-labelledby': 'label_method_' + method.method_code + '_' + method.carrier_code + ' ' + 'label_carrier_' + method.method_code + '_' + method.carrier_code
+                                                         }"/>
+                                                </td>
+                                            <!-- /ko -->
+                                            
+                                            <!--ko ifnot: (carrier.methods.length == 1 && $parents[1].getShippingList().length == 1)-->
+                                                <td class="col col-method">
+                                                    <input type="radio"
+                                                        class="radio"
+                                                        ifnot="method.error_message"
+                                                        ko-checked="$parents[1].isSelected"
+                                                        ko-value="method.carrier_code + '_' + method.method_code"
+                                                        attr="'aria-labelledby': 'label_method_' + method.method_code + '_' + method.carrier_code + ' ' + 'label_carrier_' + method.method_code + '_' + method.carrier_code,
+                                                            'checked': carrier.methods.length == 1 || $parents[1].isSelected,
+                                                            'id': 's_method_' + method.carrier_code + '_' + method.method_code," />
+                                                </td>
+                                            <!-- /ko -->
+                                            
+                                            <td class="col col-price" data-bind="attr: {'id': 's_method_' + method.carrier_code + '_' + method.method_code}">
+                                                <span class="col-price" data-bind="text: $parents[1].formatPrice(method.amount)"></span>
+                                                <!-- ko foreach: $parents[1].getRegion('price') -->
+                                                <!-- ko template: getTemplate() --><!-- /ko -->
+                                                <!-- /ko -->
+                                            </td>
+                                            <td class="col col-method"
+                                                attr="'id': 'label_method_' + method.method_code + '_' + method.carrier_code"
+                                                text="method.method_title" />
+                                            <td class="col col-carrier"
+                                                attr="'id': 'label_carrier_' + method.method_code + '_' + method.carrier_code"
+                                                text="method.carrier_title" />
+                                        <!-- /ko -->                                        
+                                    </tr>
+                                    <!-- ko if:  method.error_message -->
+                                        <tr class="row row-error"
+                                            if="method.error_message">
+                                            <td class="col col-error" colspan="4">
+                                                <div role="alert" class="message error">
+                                                    <div text="method.error_message"></div>
+                                                </div>
+                                                <span class="no-display">
+                                                    <input type="radio"
+                                                        attr="'value' : method.method_code, 'id': 's_method_' + method.method_code" />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    <!-- /ko -->
+                                    
+                                <!-- /ko -->
+                            <!-- /ko -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="onepage-checkout-shipping-method-additional-load">
+                    <each args="getRegion('shippingAdditional')" render="" />
+                </div>
+                <div role="alert"
+                     if="errorValidationMessage().length"
+                     class="message notice">
+                    <span text="errorValidationMessage()" />
+                </div>
+                
+            </form>
+            <div class="no-quotes-block"
+                 ifnot="rates().length > 0"
+                 translate="'Sorry, no quotes are available for this order at this time'" />
+        </div>
+    </div>
+
+
+
+    <div class="checkout-shipping-method">
         <h3 class="step-title step_2" id="shipping_method_step_header" data-bind="i18n: 'Shipping Methods'" data-role="title"></h3>
         <!-- ko foreach: getRegion('before-shipping-method-form') -->
         <!-- ko template: getTemplate() --><!-- /ko -->
