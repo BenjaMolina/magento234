@@ -1,0 +1,153 @@
+& when (@media-common = true) {
+    
+    #shipping,
+    #opc-shipping_method,
+    .payment-group {
+        border: 1px solid #cccccc;
+        padding: 10px;
+    }
+
+    #opc-shipping_method {
+        margin-bottom: 20px;
+    }
+    
+    .opc-wrapper .step-title {
+        border-bottom: 1px solid #cccccc;
+        padding-bottom: 10px;
+    }
+
+    /* Section de Cupon, Terminos y Place order*/
+    .discount-form {
+        display: flex;
+        align-items: flex-end;
+        
+        #discount-code {
+            margin: 10px 10px 0 0;
+        }
+    }
+
+    .opcheckout-terms_and_conditions {
+        margin: 20px 0px;
+    }
+
+    .button-opcheckout {
+        #opcheckout-button-place-order {
+            padding: 17px 28px;
+            width: 100%;
+        }
+
+    }
+
+    #opcheckout-place-order-loading {
+        margin-top: 10px;
+        font-size: 1.2em;
+    }
+
+    /*Ship Information (Ship to y Shipping Method)*/
+    .opc-block-shipping-information {
+        display: none;
+        visibility: collapse;
+    }
+
+    /*Contendor de Estimate Total (mobil)*/
+    .opc-estimated-wrapper {
+        position: sticky;
+        top: 0px;
+        background: white;
+        z-index: 99;
+    }
+    
+}
+
+
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .opc-wrapper {
+        .opc.main {
+            grid-template-columns: 1fr;
+        }
+        .opc.section2 {
+            margin-top: 20px;
+        }
+    }
+        
+    .checkout-payment-method .payment-methods {
+        margin: 0;
+    }
+
+    /*SUMMARY*/
+    .opc-sidebar.modal-custom {
+        display: initial;
+    }
+
+    .opc-sidebar-desktop {
+        .opc-block-summary{
+            display: none;
+        }
+        
+    }
+}
+
+
+//
+//  Desktop
+//  _____________________________________________
+  
+/* 768px */
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .opc-wrapper {
+        width: 100%;
+
+        .opc.main {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-gap: 30px;
+        }
+    }
+
+    .table-checkout-shipping-method {
+        width: 100%;
+    }
+
+    /*SUMMARY*/
+    .opc-sidebar.modal-custom {
+        display: none;
+    }
+    .opc-sidebar-desktop {
+        display: block
+    }
+
+}
+
+/*1024 px*/
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) { 
+    .opc-wrapper {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-gap: 30px;
+
+        .opc.main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 30px;
+        }
+    }
+
+    .opc-sidebar {
+        /*margin: 46px 0 20px;
+        width: 33.333333%*/
+        margin: 0px;
+        width: 30%
+    }
+
+    .table-checkout-shipping-method {
+        min-width: 100%;
+    }
+}
+
+
