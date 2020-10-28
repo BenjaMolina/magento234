@@ -74,6 +74,9 @@ define(
                             self.selectShippingMethod(quote.shippingMethod());
                         }else{
                             var method = self.getDefaultMethod();
+                            method = self.hasShippingMethodSelected() ? self.selectedShippingMethod() : method;
+                            method = self.hasMethodSelectedInCheckoutCart() ? self.methodSelectedInCheckoutCart() : method;
+                            
                             if(method !== false){
                                 self.selectShippingMethod(method);
                             }
@@ -211,7 +214,39 @@ define(
                 amount = parseFloat(amount);
                 var priceFormat = window.checkoutConfig.priceFormat;
                 return priceUtils.formatPrice(amount, priceFormat)
+            },
+            selectedShippingMethod: function(){
+                return window.checkoutConfig.selectedShippingMethod;
+            },
+            hasShippingMethodSelected: function(){
+                return this.selectedShippingMethod() !== null 
+                        && this.isShippingOnList(this.selectedShippingMethod().carrier_code,this.selectedShippingMethod().method_code);
+            },
+            methodSelectedInCheckoutCart: function(){
+                const list = this.rates();
+                const methodCode = checkoutData.getSelectedShippingRate();
+                let method = null;
+
+                if(list.length <= 0 || !methodCode){
+                    return method;
+                }
+
+                const splitMethodCode = methodCode.split('_');
+                
+                method = ko.utils.arrayFirst(list, function(method) {
+                    return (method.carrier_code + "_" + method.method_code  === methodCode);
+                });
+                
+
+                return method;
+
+            },
+            hasMethodSelectedInCheckoutCart: function(){
+                const methodSelected = this.methodSelectedInCheckoutCart();
+                return methodSelected !== null
+                    && this.isShippingOnList(methodSelected.carrier_code,methodSelected.method_code);
             }
+
         });
     }
 );
